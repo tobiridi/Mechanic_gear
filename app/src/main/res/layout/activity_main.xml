@@ -5,29 +5,71 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:isScrollContainer="true">
 
-    <LinearLayout
+    <!-- options -->
+    <GridLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:layout_height="50dp"
+        android:rowCount="1"
+        android:columnCount="3"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="20dp"
+        >
 
+        <!-- TODO: implement search bar -->
         <androidx.appcompat.widget.SearchView
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            android:scrollbarSize="20dp"
-            android:maxWidth="200dp"
+            android:id="@+id/search_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="fill"
+            android:background="@drawable/button_background_border"
             />
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/btn_edit"
-            android:background="@color/white"
+            android:contentDescription="delete a gear"
+            android:src="@drawable/delete_item"
+            android:background="@drawable/button_background_border"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:clickable="true"
+            android:focusable="true"
             />
 
-    </LinearLayout>
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="add new gear"
+            android:src="@drawable/add_new_item"
+            android:background="@drawable/button_background_border"
+            android:clickable="true"
+            android:focusable="true"
+            />
 
+    </GridLayout>
 
+    <!-- content -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="all gears">
+
+        <LinearLayout
+            android:id="@+id/ll_all_gears"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        </LinearLayout>
+    </ScrollView>
+
+<!--    <View-->
+<!--        android:id="@+id/v_divider"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="1dp"-->
+<!--        android:background="?android:attr/listDivider" />-->
 </LinearLayout>
