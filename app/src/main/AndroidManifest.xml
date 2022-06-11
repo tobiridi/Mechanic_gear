@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Mechanic_gear"
         android:appCategory="productivity"
-        android:description="Application pour aider en mécanique">
+        android:description="@string/app_name">
         <activity
             android:name=".MainActivity"
             android:exported="true">
