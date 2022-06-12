@@ -25,17 +25,19 @@
             android:id="@+id/search_bar"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_gravity="fill"
-            android:background="@drawable/button_background_border"
+            android:layout_gravity="fill_horizontal"
+            android:background="@drawable/background_border"
+            android:clickable="true"
+            android:focusable="true"
             />
 
         <ImageButton
+            android:id="@+id/ibtn_delete_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="delete a gear"
             android:src="@drawable/delete_item"
-            android:backgroundTint="#D3BDBD"
-            android:background="@drawable/button_background_border"
+            android:background="@drawable/imagebutton_delete_item_background"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:clickable="true"
@@ -43,12 +45,12 @@
             />
 
         <ImageButton
+            android:id="@+id/ibtn_add_new_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="add new gear"
             android:src="@drawable/add_new_item"
-            android:backgroundTint="#C2D3BD"
-            android:background="@drawable/button_background_border"
+            android:background="@drawable/imagebutton_add_new_item_background"
             android:clickable="true"
             android:focusable="true"
             />
@@ -76,6 +78,5 @@
                 android:background="?android:attr/listDivider" />
         </LinearLayout>
     </ScrollView>
-
 
 </LinearLayout>

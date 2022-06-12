@@ -4,13 +4,16 @@
 
     <application
         android:allowBackup="true"
+        android:appCategory="productivity"
+        android:description="@string/app_name"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Mechanic_gear"
-        android:appCategory="productivity"
-        android:description="@string/app_name">
+        android:theme="@style/Theme.Mechanic_gear">
+        <activity
+            android:name=".AddGearActivity"
+            android:exported="true" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
