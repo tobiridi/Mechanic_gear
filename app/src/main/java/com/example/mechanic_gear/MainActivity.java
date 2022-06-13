@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, AddGearActivity.class);
             //start new activity with callback
             //TODO : depreciate
-            startActivityForResult(intent,MAIN_ACTIVITY_CODE);
+            startActivityForResult(intent, MAIN_ACTIVITY_CODE);
 
 
             //new method not depreciate
