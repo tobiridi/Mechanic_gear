@@ -4,13 +4,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -27,11 +25,12 @@ public class MainActivity extends AppCompatActivity {
 //                }
 //            });
 
-    private View.OnClickListener add_new_item_listener = new View.OnClickListener() {
+    private View.OnClickListener add_new_gear_listener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(MainActivity.this, AddGearActivity.class);
             //start new activity with callback
+            //TODO : depreciate
             startActivityForResult(intent,MAIN_ACTIVITY_CODE);
 
 
@@ -41,10 +40,18 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    private View.OnClickListener delete_item_listener = new View.OnClickListener() {
+    private View.OnClickListener edit_gear_listener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            Toast.makeText(MainActivity.this, "click : " + view.getClass(), Toast.LENGTH_SHORT).show();
+        }
+    };
 
+    private View.OnLongClickListener modify_gear_listener = new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick(View view) {
+            Toast.makeText(MainActivity.this, "long click : " + view.getClass(), Toast.LENGTH_SHORT).show();
+            return false;
         }
     };
 
@@ -61,7 +68,8 @@ public class MainActivity extends AppCompatActivity {
             //TODO : Async task put image
             Drawable imageView = ResourcesCompat.getDrawable(getResources(), R.drawable.add_a_photo, null);
             //resize drawable
-            imageView.setBounds(0,0,120,120);
+            //dimensions : 120 or 200
+            imageView.setBounds(0,0,200,200);
             //imageView.setPadding(10,10,10,10);
             //imageView.setImageResource(R.drawable.add_new_item);
             //imageView.setLayoutParams(ll_all_gears.getLayoutParams());
@@ -71,6 +79,8 @@ public class MainActivity extends AppCompatActivity {
             btn.setText("sonde de température");
             btn.setCompoundDrawables(imageView, null, null, null);
             btn.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.button_gradient_corner_background, null));
+            btn.setOnClickListener(edit_gear_listener);
+            btn.setOnLongClickListener(modify_gear_listener);
 
             View v_multiple_divider = new View(MainActivity.this);
             //v_multiple_divider.setBackground(v_divider.getBackground());
@@ -82,9 +92,8 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        //add and delete gear
-        findViewById(R.id.ibtn_add_new_item).setOnClickListener(add_new_item_listener);
-        findViewById(R.id.ibtn_delete_item).setOnClickListener(delete_item_listener);
+        //add gear
+        findViewById(R.id.ibtn_add_new_item).setOnClickListener(add_new_gear_listener);
     }
 
 

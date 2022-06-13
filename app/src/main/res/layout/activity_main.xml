@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:rowCount="1"
-        android:columnCount="3"
+        android:columnCount="2"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
@@ -29,28 +29,29 @@
             android:background="@drawable/background_border"
             android:clickable="true"
             android:focusable="true"
+            android:layout_marginRight="5dp"
             />
 
-        <ImageButton
-            android:id="@+id/ibtn_delete_item"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="delete a gear"
-            android:src="@drawable/delete_item"
-            android:background="@drawable/imagebutton_delete_item_background"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:clickable="true"
-            android:focusable="true"
-            />
+<!--        <ImageButton-->
+<!--            android:id="@+id/ibtn_delete_item"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:contentDescription="delete a gear"-->
+<!--            android:src="@drawable/delete_item"-->
+<!--            android:background="@drawable/imagebutton_delete_item_background"-->
+<!--            android:layout_marginLeft="5dp"-->
+<!--            android:layout_marginRight="5dp"-->
+<!--            android:clickable="true"-->
+<!--            android:focusable="true"-->
+<!--            />-->
 
         <ImageButton
             android:id="@+id/ibtn_add_new_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="add new gear"
-            android:src="@drawable/add_new_item"
-            android:background="@drawable/imagebutton_add_new_item_background"
+            android:src="@drawable/add_new_gear"
+            android:background="@drawable/imagebutton_add_new_gear_background"
             android:clickable="true"
             android:focusable="true"
             />
