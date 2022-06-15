@@ -14,13 +14,6 @@ public class AddGearActivity extends AppCompatActivity {
 
     private final static int ADD_GEAR_ACTIVITY_CODE = 2;
 
-    private View.OnClickListener image_view_listener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Toast.makeText(AddGearActivity.this, "click : " + view.getClass(), Toast.LENGTH_SHORT).show();
-        }
-    };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,17 +22,29 @@ public class AddGearActivity extends AppCompatActivity {
         //get intent of previous activity
         Intent intent = getIntent();
 
-        Drawable imageView = ResourcesCompat.getDrawable(getResources(), R.drawable.test_image_supp2, null);
+        findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //data return
+                Intent intent1 = new Intent();
+                intent1.putExtra("data_send", "Cancel form");
+                setResult(RESULT_OK, intent1);
 
-        ImageView iv_gear = findViewById(R.id.iv_gear);
-        iv_gear.setOnClickListener(image_view_listener);
+                //close the activity
+                finish();
+            }
+        });
 
+        findViewById(R.id.btn_validate).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(AddGearActivity.this, "Validate form", Toast.LENGTH_SHORT).show();
+            }
+        });
 
-//        Intent intent1 = new Intent();
-//        intent1.putExtra("data_send", "en création");
-//        setResult(RESULT_OK, intent1);
-//
-//        //close the activity
-//        finish();
+        //Drawable imageView = ResourcesCompat.getDrawable(getResources(), R.drawable.test_image_supp2, null);
+
+        //ImageView iv_gear = findViewById(R.id.iv_gear);
+
     }
 }

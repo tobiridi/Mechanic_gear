@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public boolean onLongClick(View view) {
             Toast.makeText(MainActivity.this, "long click : " + view.getClass(), Toast.LENGTH_SHORT).show();
-            return false;
+            return true;
         }
     };
 
@@ -105,3 +106,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 }
+
+
+/**
+ * event types
+ * onTouchListener() -> while the finger is on the view / widget, return true if the event has been apply
+ * onCheckedChangeListener() -> to check what radio button is checked
+ */

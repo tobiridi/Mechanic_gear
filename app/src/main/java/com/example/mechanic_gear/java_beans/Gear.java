@@ -1,9 +1,10 @@
 package com.example.mechanic_gear.java_beans;
 
+import java.io.Externalizable;
 import java.io.Serializable;
 
 public class Gear implements Serializable {
-
+    //ATTRIBUTES
     private String denomination;
     private String representation;      //image (can be null)
     private String gearSensorType;
@@ -93,6 +94,7 @@ public class Gear implements Serializable {
         this.composition = composition;
     }
 
+    //CONSTRUCTOR
     public Gear(String denomination, String representation, String gearSensorType,
                 String basicWorking, String role, byte nbrWire, String tests, String signalType,
                 GearCategory gearCategory, String note, String composition) {
@@ -110,10 +112,28 @@ public class Gear implements Serializable {
         this.composition = composition;
     }
 
-    public Gear(){
+    public Gear(String denomination, String gearSensorType,
+                String basicWorking, String role, byte nbrWire, String tests,
+                GearCategory gearCategory, String composition) {
 
+        this.denomination = denomination;
+        this.representation = null;
+        this.gearSensorType = gearSensorType;
+        this.basicWorking = basicWorking;
+        this.role = role;
+        this.nbrWire = nbrWire;
+        this.tests = tests;
+        this.signalType = null;
+        this.gearCategory = gearCategory;
+        this.note = null;
+        this.composition = composition;
     }
 
+    public Gear() {
+        this.gearCategory = GearCategory.ACTIONNEUR;
+    }
+
+    //METHODS
     @Override
     public String toString() {
         return "Gear{" +

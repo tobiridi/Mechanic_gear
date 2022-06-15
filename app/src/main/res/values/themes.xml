@@ -14,7 +14,31 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <!-- table row -->
+    <style name="table_row">
+        <item name="android:layout_marginBottom">5dp</item>
+    </style>
+
+    <!-- text style -->
+    <style name="text_view">
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="edit_text">
+        <item name="android:textSize">20sp</item>
+        <item name="android:inputType">text</item>
+    </style>
+
     <!-- buttons style -->
+    <style name="btn_cancel">
+        <item name="android:layout_margin">5dp</item>
+    </style>
+    
+    <style name="btn_validate">
+        <item name="android:layout_margin">5dp</item>
+    </style>
+
+
 <!--    <style name="btn_new">-->
 <!--        <item name="android:src">@drawable/add_new_item</item>-->
 <!--        <item name="background">@drawable/button_background_border</item>-->
