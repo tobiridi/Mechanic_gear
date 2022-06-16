@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final static int MAIN_ACTIVITY_CODE = 1;
+    public final static int MAIN_ACTIVITY_CODE = 1;
     private static Toast toast= null;
 
 //    private ActivityResultLauncher<Intent> temp = registerForActivityResult(
@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
 
             Button btn = new Button(MainActivity.this);
             //TODO : Async task put text
-            btn.setText(getText(R.string.gear_denomination));
+            btn.setText(getResources().getString(R.string.gear_denomination));
             btn.setCompoundDrawables(imageView, null, null, null);
             btn.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.button_gradient_corner_background, null));
             btn.setOnClickListener(edit_gear_listener);

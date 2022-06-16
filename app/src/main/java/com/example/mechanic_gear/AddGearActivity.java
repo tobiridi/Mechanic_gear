@@ -14,7 +14,7 @@ import com.example.mechanic_gear.java_beans.Gear;
 
 public class AddGearActivity extends AppCompatActivity {
 
-    private final static int ADD_GEAR_ACTIVITY_CODE = 2;
+    public final static int ADD_GEAR_ACTIVITY_CODE = 2;
     //avoid show many messages
     private static Toast toast = null;
 
