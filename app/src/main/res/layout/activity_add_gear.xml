@@ -7,299 +7,248 @@
     android:orientation="vertical"
     tools:context=".AddGearActivity">
 
-    <!-- TODO : create form Gear object,
-                button cancel + validation,
-                complete requires fields
-     -->
-
-    <!-- to delete -->
-    <GridLayout
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginBottom="20dp"
-        android:columnCount="3"
-        android:rowCount="1">
-
-        <!-- dimension : 275 x 183 pixels -->
-<!--        <ImageView-->
-<!--            android:id="@+id/iv_gear"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:layout_gravity="fill"-->
-<!--            android:layout_column="0"-->
-<!--            android:clickable="true"-->
-<!--            android:focusable="true"-->
-<!--            android:scaleType="fitXY"-->
-<!--            android:src="@drawable/test_image_supp2"-->
-<!--            android:adjustViewBounds="true"-->
-<!--            />-->
-
-<!--        <ImageButton-->
-<!--            android:id="@+id/ibtn_delete_item"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_column="1"-->
-<!--            android:layout_marginLeft="5dp"-->
-<!--            android:layout_marginRight="5dp"-->
-<!--            android:background="@drawable/imagebutton_delete_gear_background"-->
-<!--            android:clickable="true"-->
-<!--            android:contentDescription="delete a gear"-->
-<!--            android:focusable="true"-->
-<!--            android:src="@drawable/delete_gear" />-->
-
-<!--        <ImageButton-->
-<!--            android:id="@+id/ibtn_add_new_item"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_column="2"-->
-<!--            android:background="@drawable/imagebutton_add_new_gear_background"-->
-<!--            android:clickable="true"-->
-<!--            android:contentDescription="add new gear"-->
-<!--            android:focusable="true"-->
-<!--            android:src="@drawable/add_new_gear" />-->
-
-    </GridLayout>
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/add_gear_title"
-        android:textSize="30sp"
-        android:gravity="center"
         android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:text="@string/add_gear_title"
         android:textColor="#222222"
-        android:textStyle="bold"
-        />
+        android:textSize="30sp"
+        android:textStyle="bold" />
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
+        <!--
+            shrink = réduire
+            stretch = étirer
+            collapse = réduire
+         -->
         <TableLayout
+            android:id="@+id/tl_add_new_gear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:id="@+id/tl_add_new_gear"
-            android:stretchColumns="*"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:layout_marginTop="5dp">
+            android:orientation="vertical"
+            android:shrinkColumns="*"
+            android:stretchColumns="*">
 
             <TableRow
+                style="@style/table_row"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/table_row">
+                android:layout_height="wrap_content">
 
                 <TextView
-                    android:layout_height="wrap_content"
-                    android:text="@string/gear_denomination"
                     style="@style/text_view"
-                    />
+                    android:layout_height="match_parent"
+                    android:text="@string/gear_denomination" />
+
                 <EditText
-                    android:layout_height="wrap_content"
-                    android:hint="@string/gear_denomination"
-                    android:autofillHints="name"
+                    android:id="@+id/et_gear_denomination"
                     style="@style/edit_text"
-                    />
+                    android:layout_height="wrap_content"
+                    android:autofillHints="name"
+                    android:hint="@string/gear_denomination" />
             </TableRow>
 
             <TableRow
+                style="@style/table_row"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/table_row">
+                android:layout_height="wrap_content">
 
                 <TextView
-                    android:layout_height="wrap_content"
-                    android:text="@string/gear_representation"
                     style="@style/text_view"
-                    />
+                    android:layout_height="match_parent"
+                    android:text="@string/gear_representation" />
+
                 <Button
+                    android:id="@+id/btn_gear_representation"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/gear_representation"
-                    android:drawableLeft="@drawable/add_a_photo"
                     android:contentDescription="@string/gear_representation"
-                    />
+                    android:drawableLeft="@drawable/add_a_photo"
+                    android:text="@string/gear_representation" />
             </TableRow>
 
             <TableRow
+                style="@style/table_row"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/table_row">
+                android:layout_height="wrap_content">
 
                 <TextView
-                    android:layout_height="wrap_content"
-                    android:text="@string/gear_gearSensorType"
                     style="@style/text_view"
-                    />
+                    android:layout_height="match_parent"
+                    android:text="@string/gear_gearSensorType" />
+
                 <EditText
-                    android:layout_height="wrap_content"
-                    android:hint="@string/gear_gearSensorType"
-                    android:autofillHints="name"
+                    android:id="@+id/et_gear_sensorType"
                     style="@style/edit_text"
-                    />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/table_row">
-
-                <TextView
                     android:layout_height="wrap_content"
-                    android:text="@string/gear_basicWorking"
-                    style="@style/text_view"
-                    />
-                <EditText
-                    android:layout_height="wrap_content"
-                    android:hint="@string/gear_basicWorking"
                     android:autofillHints="name"
-                    style="@style/edit_text"
-                    />
+                    android:hint="@string/gear_gearSensorType" />
             </TableRow>
 
             <TableRow
+                style="@style/table_row"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/table_row">
+                android:layout_height="wrap_content">
 
                 <TextView
-                    android:layout_height="wrap_content"
-                    android:text="@string/gear_role"
                     style="@style/text_view"
-                    />
+                    android:layout_height="match_parent"
+                    android:text="@string/gear_basicWorking" />
+
                 <EditText
-                    android:layout_height="wrap_content"
-                    android:hint="@string/gear_role"
+                    android:id="@+id/et_gear_basicWorking"
+                    style="@style/edit_text"
+                    android:layout_height="match_parent"
                     android:autofillHints="name"
-                    style="@style/edit_text"
-                    />
+                    android:hint="@string/gear_basicWorking" />
             </TableRow>
 
             <TableRow
+                style="@style/table_row"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/table_row">
+                android:layout_height="wrap_content">
 
                 <TextView
-                    android:layout_height="wrap_content"
-                    android:text="@string/gear_nbrWire"
                     style="@style/text_view"
-                    />
+                    android:layout_height="match_parent"
+                    android:text="@string/gear_role" />
+
                 <EditText
+                    android:id="@+id/et_gear_role"
+                    style="@style/edit_text"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="name"
+                    android:hint="@string/gear_role" />
+            </TableRow>
+
+            <TableRow
+                style="@style/table_row"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/text_view"
+                    android:layout_height="match_parent"
+                    android:text="@string/gear_nbrWire" />
+
+                <EditText
+                    android:id="@+id/et_gear_nbrWire"
+                    style="@style/edit_text"
                     android:layout_height="wrap_content"
                     android:hint="@string/gear_nbrWire"
                     android:inputType="number"
-                    style="@style/edit_text"
-                    />
+                    android:maxLength="3" />
             </TableRow>
 
             <TableRow
+                style="@style/table_row"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/table_row">
+                android:layout_height="wrap_content">
 
                 <TextView
-                    android:layout_height="wrap_content"
-                    android:text="@string/gear_tests"
                     style="@style/text_view"
-                    />
+                    android:layout_height="match_parent"
+                    android:text="@string/gear_tests" />
+
                 <EditText
-                    android:layout_height="wrap_content"
-                    android:hint="@string/gear_tests"
-                    android:autofillHints="name"
+                    android:id="@+id/et_gear_tests"
                     style="@style/edit_text"
-                    />
+                    android:layout_height="wrap_content"
+                    android:autofillHints="name"
+                    android:hint="@string/gear_tests" />
             </TableRow>
 
             <TableRow
+                style="@style/table_row"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/table_row">
+                android:layout_height="wrap_content">
 
                 <TextView
-                    android:layout_height="wrap_content"
-                    android:text="@string/gear_signalType"
-                    android:layout_gravity="center_vertical"
                     style="@style/text_view"
-                    />
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/gear_signalType" />
 
                 <LinearLayout
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
                     <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/gear_signalType"
-                        android:autofillHints="name"
+                        android:id="@+id/et_gear_signalType"
                         style="@style/edit_text"
-                        />
-                    <Button
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/gear_signalType"
-                        android:drawableLeft="@drawable/add_a_photo"
+                        android:autofillHints="name"
+                        android:hint="@string/gear_signalType" />
+
+                    <Button
+                        android:id="@+id/btn_gear_signalType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:contentDescription="@string/gear_signalType"
-                        />
+                        android:drawableLeft="@drawable/add_a_photo"
+                        android:text="@string/gear_signalType" />
                 </LinearLayout>
             </TableRow>
 
             <TableRow
+                style="@style/table_row"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/table_row">
+                android:layout_height="wrap_content">
 
                 <TextView
-                    android:layout_height="wrap_content"
-                    android:text="@string/gear_gearCategory"
                     style="@style/text_view"
-                    />
+                    android:layout_height="match_parent"
+                    android:text="@string/gear_gearCategory" />
+
                 <EditText
-                    android:layout_height="wrap_content"
-                    android:hint="@string/gear_gearCategory"
-                    android:autofillHints="name"
+                    android:id="@+id/et_gear_gearCategory"
                     style="@style/edit_text"
-                    />
+                    android:layout_height="wrap_content"
+                    android:autofillHints="name"
+                    android:hint="@string/gear_gearCategory" />
             </TableRow>
 
             <TableRow
+                style="@style/table_row"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/table_row">
+                android:layout_height="wrap_content">
 
                 <TextView
-                    android:layout_height="wrap_content"
-                    android:text="@string/gear_composition"
                     style="@style/text_view"
-                    />
+                    android:layout_height="match_parent"
+                    android:text="@string/gear_composition" />
+
                 <EditText
-                    android:layout_height="wrap_content"
-                    android:hint="@string/gear_composition"
-                    android:autofillHints="name"
+                    android:id="@+id/et_gear_composition"
                     style="@style/edit_text"
-                    />
+                    android:layout_height="wrap_content"
+                    android:autofillHints="name"
+                    android:hint="@string/gear_composition" />
             </TableRow>
 
             <TableRow
+                style="@style/table_row"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/table_row">
+                android:layout_height="wrap_content">
 
                 <TextView
-                    android:layout_height="wrap_content"
-                    android:text="@string/gear_note"
                     style="@style/text_view"
-                    />
+                    android:layout_height="match_parent"
+                    android:text="@string/gear_note" />
+
                 <EditText
-                    android:layout_height="wrap_content"
-                    android:hint="@string/gear_note"
-                    android:autofillHints="name"
+                    android:id="@+id/et_gear_note"
                     style="@style/edit_text"
-                    />
+                    android:layout_height="wrap_content"
+                    android:autofillHints="name"
+                    android:hint="@string/gear_note" />
             </TableRow>
 
             <TableRow
@@ -308,18 +257,17 @@
 
                 <Button
                     android:id="@+id/btn_cancel"
-                    android:layout_height="wrap_content"
-                    android:text="@string/cancel_message"
-                    android:backgroundTint="#9C1515"
                     style="@style/btn_cancel"
-                    />
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#9C1515"
+                    android:text="@string/cancel_message" />
+
                 <Button
                     android:id="@+id/btn_validate"
-                    android:layout_height="wrap_content"
-                    android:text="@string/validate_message"
-                    android:backgroundTint="#169E48"
                     style="@style/btn_validate"
-                    />
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#169E48"
+                    android:text="@string/validate_message" />
 
             </TableRow>
 

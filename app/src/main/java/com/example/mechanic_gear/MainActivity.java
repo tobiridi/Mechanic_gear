@@ -1,5 +1,9 @@
 package com.example.mechanic_gear;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
@@ -9,20 +13,25 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
     private final static int MAIN_ACTIVITY_CODE = 1;
+    private static Toast toast= null;
 
 //    private ActivityResultLauncher<Intent> temp = registerForActivityResult(
 //            new ActivityResultContracts.StartActivityForResult(),
 //            new ActivityResultCallback<ActivityResult>() {
 //                @Override
 //                public void onActivityResult(ActivityResult result) {
-//                    Toast.makeText(MainActivity.this, result.getResultCode(), Toast.LENGTH_SHORT).show();
+//                    if (result != null){
+//                        Toast.makeText(MainActivity.this, result.getResultCode(), Toast.LENGTH_SHORT).show();
+//                    }
+//                    else {
+//                        Toast.makeText(MainActivity.this, "retour false", Toast.LENGTH_SHORT).show();
+//                    }
 //                }
 //            });
 
@@ -34,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
             //TODO : depreciate
             startActivityForResult(intent, MAIN_ACTIVITY_CODE);
 
-
             //new method not depreciate
             //temp.launch(intent);
 
@@ -44,14 +52,22 @@ public class MainActivity extends AppCompatActivity {
     private View.OnClickListener edit_gear_listener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Toast.makeText(MainActivity.this, "click : " + view.getClass(), Toast.LENGTH_SHORT).show();
+            if (toast != null){
+                toast.cancel();
+            }
+            toast = Toast.makeText(MainActivity.this, "click : " + view.getClass(), Toast.LENGTH_SHORT);
+            toast.show();
         }
     };
 
     private View.OnLongClickListener modify_gear_listener = new View.OnLongClickListener() {
         @Override
         public boolean onLongClick(View view) {
-            Toast.makeText(MainActivity.this, "long click : " + view.getClass(), Toast.LENGTH_SHORT).show();
+            if (toast != null){
+                toast.cancel();
+            }
+            toast = Toast.makeText(MainActivity.this, "long click : " + view.getClass(), Toast.LENGTH_SHORT);
+            toast.show();
             return true;
         }
     };
@@ -77,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
 
             Button btn = new Button(MainActivity.this);
             //TODO : Async task put text
-            btn.setText("sonde de température");
+            btn.setText(getText(R.string.gear_denomination));
             btn.setCompoundDrawables(imageView, null, null, null);
             btn.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.button_gradient_corner_background, null));
             btn.setOnClickListener(edit_gear_listener);

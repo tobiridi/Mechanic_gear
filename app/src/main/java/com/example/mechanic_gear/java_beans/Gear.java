@@ -5,6 +5,7 @@ import java.io.Serializable;
 
 public class Gear implements Serializable {
     //ATTRIBUTES
+    private int id;
     private String denomination;
     private String representation;      //image (can be null)
     private String gearSensorType;
@@ -16,6 +17,13 @@ public class Gear implements Serializable {
     private GearCategory gearCategory;
     private String note;                //(can be null)
     private String composition;
+
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getDenomination() {
         return denomination;
