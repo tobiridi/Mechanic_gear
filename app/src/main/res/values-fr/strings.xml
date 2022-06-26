@@ -11,4 +11,5 @@
     <string name="cancel_message">Annuler</string>
     <string name="validate_message">Valider</string>
     <string name="add_gear_title">Ajouter une nouvelle pièce</string>
+    <string name="details_gear">Détails de la pièce</string>
 </resources>

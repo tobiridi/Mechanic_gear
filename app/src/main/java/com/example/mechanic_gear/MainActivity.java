@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         //TODO : Async task to load all gears
         for (int i = 1; i <= 50; i++) {
             //TODO : Async task put image
-            Drawable imageView = ResourcesCompat.getDrawable(getResources(), R.drawable.add_a_photo, null);
+            Drawable imageView = ResourcesCompat.getDrawable(getResources(), R.drawable.capteur_de_pression, null);
             //resize drawable
             //dimensions : 120 or 200
             imageView.setBounds(0,0,200,200);

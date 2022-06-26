@@ -6,11 +6,23 @@ import androidx.core.content.res.ResourcesCompat;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mechanic_gear.asynchronous_task.SaveNewGearTaskAsync;
 import com.example.mechanic_gear.java_beans.Gear;
+import com.example.mechanic_gear.java_beans.GearCategory;
+
+import java.util.ArrayList;
 
 public class AddGearActivity extends AppCompatActivity {
 
@@ -26,6 +38,12 @@ public class AddGearActivity extends AppCompatActivity {
         //get intent of previous activity
         Intent intent = getIntent();
 
+        TextView tv_title = findViewById(R.id.tv_title);
+        //add an underline below the title
+        SpannableString spannableString = new SpannableString(getResources().getString(R.string.add_gear_title) + " :");
+        spannableString.setSpan(new UnderlineSpan(),0, spannableString.length(), 0);
+        tv_title.setText(spannableString);
+
         findViewById(R.id.btn_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -36,7 +54,7 @@ public class AddGearActivity extends AppCompatActivity {
                 //data return
                 Intent intent1 = new Intent();
                 intent1.putExtra("data_send", "Cancel form");
-                setResult(RESULT_OK, intent1);
+                setResult(RESULT_CANCELED, intent1);
 
                 //close the activity
                 finish();
@@ -46,6 +64,12 @@ public class AddGearActivity extends AppCompatActivity {
         findViewById(R.id.btn_validate).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //async task
+                Gear g = new Gear("denomination","base64",
+                        "capteur","role1",(byte)3,"multimètre",
+                        GearCategory.ACTIONNEUR,"composer de fer");
+                new SaveNewGearTaskAsync(AddGearActivity.this).execute(g);
+
                 if (toast != null){
                     toast.cancel();
                 }
@@ -65,6 +89,7 @@ public class AddGearActivity extends AppCompatActivity {
     }
 
     private static Gear createGearOrNull(){
+        
         //TODO
         Gear gear;
         gear = new Gear();

@@ -3,6 +3,7 @@
     <string name="cancel_message">Cancel</string>
     <string name="validate_message">Validate</string>
     <string name="add_gear_title">Add a new gear</string>
+    <string name="details_gear">Details of the gear</string>
     <!-- string of "Gear" object -->
     <string name="gear_denomination">Denomination</string>
     <string name="gear_representation">Representation</string>
