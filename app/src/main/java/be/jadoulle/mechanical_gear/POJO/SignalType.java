@@ -1,14 +1,20 @@
 package be.jadoulle.mechanical_gear.POJO;
 
-import android.widget.ImageView;
-
 import java.io.Serializable;
-import java.util.ArrayList;
 
 public class SignalType implements Serializable {
     //ATTRIBUTES
+    private int id;
     private String text;
-    private ArrayList<ImageView> images;
+    private byte[] picture;
+    private Gear gear;
+
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getText() {
         return text;
@@ -17,28 +23,35 @@ public class SignalType implements Serializable {
         this.text = text;
     }
 
-    public ArrayList<ImageView> getImages() {
-        return images;
+    public byte[] getPicture() {
+        return picture;
     }
-    public void setImages(ArrayList<ImageView> images) {
-        this.images = images;
+    public void setPicture(byte[] picture) {
+        this.picture = picture;
+    }
+
+    public Gear getGear() {
+        return gear;
+    }
+    public void setGear(Gear gear) {
+        this.gear = gear;
     }
 
     //CONSTRUCTOR
-    public SignalType(String text, ArrayList<ImageView> images) {
+    public SignalType(int id, String text, byte[] picture, Gear gear) {
+        this.id = id;
         this.text = text;
-        this.images = images;
+        this.picture = picture;
+        this.gear = gear;
+        this.gear.addSignalType(this);
     }
 
     //METHODS
-    public void addImage(ImageView img) {
-        this.images.add(img);
-    }
-
     @Override
     public String toString() {
         return "SignalType{" +
-                "text='" + text + '\'' +
+                "id=" + id +
+                ", text='" + text + '\'' +
                 '}';
     }
 }

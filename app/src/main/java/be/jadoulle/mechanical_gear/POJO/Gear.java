@@ -1,7 +1,5 @@
 package be.jadoulle.mechanical_gear.POJO;
 
-import android.widget.ImageView;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -28,13 +26,13 @@ public class Gear implements Serializable {
     //ATTRIBUTES
     private int id;
     private String denomination;
-    private ArrayList<ImageView> representation;      //images (can be null)
+    private ArrayList<byte[]> representations;      //images (can have 0)
     private String gearSensorType;
     private String basicWorking;
     private String role;
     private byte nbrWire;
     private String tests;
-    private SignalType signalType;      //images + text (can be null)
+    private ArrayList<SignalType> signalTypes;      //images + text (can have 0)
     private String gearCategory;
     private String note;                //(can be null)
     private String composition;
@@ -53,11 +51,11 @@ public class Gear implements Serializable {
         this.denomination = denomination;
     }
 
-    public ArrayList<ImageView> getRepresentation() {
-        return representation;
+    public ArrayList<byte[]> getRepresentations() {
+        return representations;
     }
-    public void setRepresentation(ArrayList<ImageView> representation) {
-        this.representation = representation;
+    public void setRepresentations(ArrayList<byte[]> representations) {
+        this.representations = representations;
     }
 
     public String getGearSensorType() {
@@ -95,11 +93,11 @@ public class Gear implements Serializable {
         this.tests = tests;
     }
 
-    public SignalType getSignalType() {
-        return signalType;
+    public ArrayList<SignalType> getSignalTypes() {
+        return signalTypes;
     }
-    public void setSignalType(SignalType signalType) {
-        this.signalType = signalType;
+    public void setSignalTypes(ArrayList<SignalType> signalTypes) {
+        this.signalTypes = signalTypes;
     }
 
     public String getGearCategory() {
@@ -124,40 +122,42 @@ public class Gear implements Serializable {
     }
 
     //CONSTRUCTOR
-    public Gear(int id, String denomination, ArrayList<ImageView> representation, String gearSensorType,
-                String basicWorking, String role, byte nbrWire, String tests, SignalType signalType,
-                String gearCategory, String note, String composition) {
-
+    public Gear(int id, String denomination, String gearSensorType, String basicWorking, String role,
+                byte nbrWire, String tests, String gearCategory, String note, String composition) {
         this.id = id;
         this.denomination = denomination;
-        this.representation = representation;
         this.gearSensorType = gearSensorType;
         this.basicWorking = basicWorking;
         this.role = role;
         this.nbrWire = nbrWire;
         this.tests = tests;
-        this.signalType = signalType;
         this.gearCategory = gearCategory;
         this.note = note;
         this.composition = composition;
-
+        this.representations = new ArrayList<>();
+        this.signalTypes = new ArrayList<>();
     }
 
     //METHODS
-    public void addRepresentation(ImageView representation) {
-        this.representation.add(representation);
+    public boolean addRepresentation(byte[] newRepresentation) {
+        return this.representations.add(newRepresentation);
+    }
+
+    public boolean addSignalType(SignalType newSignalType) {
+        return this.signalTypes.add(newSignalType);
     }
 
     @Override
     public String toString() {
         return "Gear{" +
-                "denomination='" + denomination + '\'' +
+                "id=" + id +
+                ", denomination='" + denomination + '\'' +
                 ", gearSensorType='" + gearSensorType + '\'' +
                 ", basicWorking='" + basicWorking + '\'' +
                 ", role='" + role + '\'' +
                 ", nbrWire=" + nbrWire +
                 ", tests='" + tests + '\'' +
-                ", gearCategory=" + gearCategory +
+                ", gearCategory='" + gearCategory + '\'' +
                 ", note='" + note + '\'' +
                 ", composition='" + composition + '\'' +
                 '}';
