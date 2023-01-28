@@ -1,18 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:orientation="vertical"
+    android:isScrollContainer="true">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <!-- options -->
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:rowCount="1"
+        android:columnCount="2"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="20dp"
+        >
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- TODO: implement search bar -->
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/search_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="fill_horizontal"
+            android:background="@drawable/background_border"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_marginRight="5dp"
+            />
+
+        <ImageButton
+            android:id="@+id/ibtn_add_new_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="add new gear"
+            android:src="@drawable/add_new_gear"
+            android:background="@drawable/imagebutton_add_new_gear_background"
+            android:clickable="true"
+            android:focusable="true"
+            />
+
+    </GridLayout>
+
+    <!-- content -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="all gears">
+
+        <LinearLayout
+            android:id="@+id/ll_all_gears"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="5dp" >
+
+            <View
+                android:visibility="gone"
+                android:id="@+id/v_divider"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:background="?android:attr/listDivider" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

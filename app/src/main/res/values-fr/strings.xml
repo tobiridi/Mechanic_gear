@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="gear_denomination">Dénomination</string>
+    <string name="gear_representation">Représentation</string>
+    <string name="gear_gearSensorType">Type de capteur</string>
+    <string name="gear_basicWorking">Fonctionnement de base</string>
+    <string name="gear_role">Rôle</string>
+    <string name="gear_nbrWire">Nombre de fils</string>
+    <string name="gear_signalType">Type de signal</string>
+    <string name="gear_gearCategory">Catégorie de la pièce</string>
+    <string name="cancel_message">Annuler</string>
+    <string name="validate_message">Valider</string>
+    <string name="add_gear_title">Ajouter une nouvelle pièce</string>
+    <string name="details_gear">Détails de la pièce</string>
+</resources>

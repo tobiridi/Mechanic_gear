@@ -1,2 +1,2 @@
 # Mechanic_gear
-Mechanical project for easily find electrical gears
+Android project for easily find electrical gears present in mechanic

@@ -1,3 +1,19 @@
 <resources>
-    <string name="app_name">Mechanical_gear</string>
+    <string name="app_name" translatable="false">Mechanical_gear</string>
+    <string name="cancel_message">Cancel</string>
+    <string name="validate_message">Validate</string>
+    <string name="add_gear_title">Add a new gear</string>
+    <string name="details_gear">Details of the gear</string>
+    <!-- string of "Gear" object -->
+    <string name="gear_denomination">Denomination</string>
+    <string name="gear_representation">Representation</string>
+    <string name="gear_gearSensorType">Sensor type</string>
+    <string name="gear_basicWorking">Basic working</string>
+    <string name="gear_role">Role</string>
+    <string name="gear_nbrWire">Number of wire</string>
+    <string name="gear_tests" translatable="false">Tests</string>
+    <string name="gear_signalType">Signal type</string>
+    <string name="gear_gearCategory">Gear category</string>
+    <string name="gear_note" translatable="false">Note</string>
+    <string name="gear_composition" translatable="false">Composition</string>
 </resources>
