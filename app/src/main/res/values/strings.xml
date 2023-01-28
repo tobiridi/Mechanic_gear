@@ -1,10 +1,11 @@
 <resources>
     <string name="app_name" translatable="false">Mechanical_gear</string>
+    <string name="app_description">An application description</string>
     <string name="cancel_message">Cancel</string>
     <string name="validate_message">Validate</string>
     <string name="add_gear_title">Add a new gear</string>
     <string name="details_gear">Details of the gear</string>
-    <!-- string of "Gear" object -->
+    <!-- string of "Gear" JAVA object -->
     <string name="gear_denomination">Denomination</string>
     <string name="gear_representation">Representation</string>
     <string name="gear_gearSensorType">Sensor type</string>

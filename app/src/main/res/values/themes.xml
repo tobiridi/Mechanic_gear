@@ -14,15 +14,18 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <!-- table row -->
-    <style name="table_row">
-        <item name="android:layout_marginBottom">10dp</item>
-    </style>
-
     <!-- TextView -->
     <style name="text_view">
         <item name="android:textSize">20sp</item>
-        <item name="android:gravity">center|start</item>
+        <item name="android:gravity">start|center</item>
+    </style>
+
+    <style name="text_view_title">
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">#222222</item>
+        <item name="android:textSize">30sp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <!-- EditText -->
@@ -34,10 +37,12 @@
     <!-- Button -->
     <style name="btn_cancel">
         <item name="android:layout_margin">5dp</item>
+        <item name="android:backgroundTint">#9C1515</item>
     </style>
 
     <style name="btn_validate">
         <item name="android:layout_margin">5dp</item>
+        <item name="android:backgroundTint">#169E48</item>
     </style>
 
 </resources>

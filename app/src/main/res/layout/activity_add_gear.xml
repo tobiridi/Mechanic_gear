@@ -6,16 +6,12 @@
     android:orientation="vertical"
     tools:context=".AddGearActivity">
 
-<!--        android:text="@string/add_gear_title" -->
     <TextView
         android:id="@+id/tv_title"
+        style="@style/text_view_title"
+        android:text="@string/add_gear_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:gravity="center"
-        android:textColor="#222222"
-        android:textSize="30sp"
-        android:textStyle="bold" />
+        android:layout_height="wrap_content" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -37,9 +33,9 @@
             android:stretchColumns="*">
 
             <TableRow
-                style="@style/table_row"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp">
 
                 <TextView
                     style="@style/text_view"
@@ -55,9 +51,9 @@
             </TableRow>
 
             <TableRow
-                style="@style/table_row"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp">
 
                 <TextView
                     style="@style/text_view"
@@ -74,9 +70,9 @@
             </TableRow>
 
             <TableRow
-                style="@style/table_row"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp">
 
                 <TextView
                     style="@style/text_view"
@@ -92,9 +88,9 @@
             </TableRow>
 
             <TableRow
-                style="@style/table_row"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp">
 
                 <TextView
                     style="@style/text_view"
@@ -110,9 +106,9 @@
             </TableRow>
 
             <TableRow
-                style="@style/table_row"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp">
 
                 <TextView
                     style="@style/text_view"
@@ -128,9 +124,9 @@
             </TableRow>
 
             <TableRow
-                style="@style/table_row"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp">
 
                 <TextView
                     style="@style/text_view"
@@ -147,9 +143,9 @@
             </TableRow>
 
             <TableRow
-                style="@style/table_row"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp">
 
                 <TextView
                     style="@style/text_view"
@@ -165,9 +161,9 @@
             </TableRow>
 
             <TableRow
-                style="@style/table_row"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp">
 
                 <TextView
                     style="@style/text_view"
@@ -198,9 +194,9 @@
             </TableRow>
 
             <TableRow
-                style="@style/table_row"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp">
 
                 <TextView
                     style="@style/text_view"
@@ -216,9 +212,9 @@
             </TableRow>
 
             <TableRow
-                style="@style/table_row"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp">
 
                 <TextView
                     style="@style/text_view"
@@ -234,9 +230,9 @@
             </TableRow>
 
             <TableRow
-                style="@style/table_row"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp">
 
                 <TextView
                     style="@style/text_view"
@@ -259,14 +255,12 @@
                     android:id="@+id/btn_cancel"
                     style="@style/btn_cancel"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="#9C1515"
                     android:text="@string/cancel_message" />
 
                 <Button
                     android:id="@+id/btn_validate"
                     style="@style/btn_validate"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="#169E48"
                     android:text="@string/validate_message" />
 
             </TableRow>

@@ -30,17 +30,16 @@
             android:clickable="true"
             android:focusable="true"
             android:layout_marginRight="5dp"
+            android:visibility="invisible"
             />
 
         <ImageButton
             android:id="@+id/ibtn_add_new_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="add new gear"
             android:src="@drawable/add_new_gear"
             android:background="@drawable/imagebutton_add_new_gear_background"
             android:clickable="true"
-            android:focusable="true"
             />
 
     </GridLayout>
@@ -48,8 +47,7 @@
     <!-- content -->
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:contentDescription="all gears">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:id="@+id/ll_all_gears"
@@ -58,12 +56,14 @@
             android:orientation="vertical"
             android:layout_margin="5dp" >
 
+            <!-- TODO : change to other View -->
             <View
                 android:visibility="gone"
                 android:id="@+id/v_divider"
                 android:layout_width="match_parent"
                 android:layout_height="5dp"
                 android:background="?android:attr/listDivider" />
+
         </LinearLayout>
     </ScrollView>
 

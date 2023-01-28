@@ -12,4 +12,5 @@
     <string name="validate_message">Valider</string>
     <string name="add_gear_title">Ajouter une nouvelle pièce</string>
     <string name="details_gear">Détails de la pièce</string>
+    <string name="app_description">Voici une description de l\'application</string>
 </resources>
