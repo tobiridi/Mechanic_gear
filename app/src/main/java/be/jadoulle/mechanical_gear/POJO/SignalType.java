@@ -1,12 +1,21 @@
 package be.jadoulle.mechanical_gear.POJO;
 
+import androidx.room.Embedded;
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.PrimaryKey;
+import androidx.room.Relation;
+
 import java.io.Serializable;
 
+@Entity(tableName = "signal_type")
 public class SignalType implements Serializable {
     //ATTRIBUTES
+    @PrimaryKey(autoGenerate = true)
     private int id;
     private String text;
     private byte[] picture;
+
     private Gear gear;
 
     public int getId() {

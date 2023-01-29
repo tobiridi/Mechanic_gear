@@ -1,7 +1,13 @@
 package be.jadoulle.mechanical_gear.POJO;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+
+import be.jadoulle.mechanical_gear.Database.GearDatabase;
 
 /*
     sensor = capteur
@@ -22,18 +28,24 @@ import java.util.ArrayList;
     composition;        la matière de l'objet (saisie utilisateur)
  */
 
+@Entity(tableName = "gear")
 public class Gear implements Serializable {
     //ATTRIBUTES
+    @PrimaryKey(autoGenerate = true)
     private int id;
     private String denomination;
-    private ArrayList<byte[]> representations;      //images (can have 0)
-    private String gearSensorType;
+    private ArrayList<Representation> representations;      //images (can have 0)
+
+    private String sensorType;
+    @ColumnInfo(name = "basic_working")
     private String basicWorking;
     private String role;
+    @ColumnInfo(name = "nbr_wire")
     private byte nbrWire;
     private String tests;
+
     private ArrayList<SignalType> signalTypes;      //images + text (can have 0)
-    private String gearCategory;
+    private String category;
     private String note;                //(can be null)
     private String composition;
 
@@ -51,18 +63,18 @@ public class Gear implements Serializable {
         this.denomination = denomination;
     }
 
-    public ArrayList<byte[]> getRepresentations() {
+    public ArrayList<Representation> getRepresentations() {
         return representations;
     }
-    public void setRepresentations(ArrayList<byte[]> representations) {
+    public void setRepresentations(ArrayList<Representation> representations) {
         this.representations = representations;
     }
 
-    public String getGearSensorType() {
-        return gearSensorType;
+    public String getSensorType() {
+        return sensorType;
     }
-    public void setGearSensorType(String gearSensorType) {
-        this.gearSensorType = gearSensorType;
+    public void setSensorType(String sensorType) {
+        this.sensorType = sensorType;
     }
 
     public String getBasicWorking() {
@@ -100,11 +112,11 @@ public class Gear implements Serializable {
         this.signalTypes = signalTypes;
     }
 
-    public String getGearCategory() {
-        return gearCategory;
+    public String getCategory() {
+        return category;
     }
-    public void setGearCategory(String gearCategory) {
-        this.gearCategory = gearCategory;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public String getNote() {
@@ -122,16 +134,16 @@ public class Gear implements Serializable {
     }
 
     //CONSTRUCTOR
-    public Gear(int id, String denomination, String gearSensorType, String basicWorking, String role,
-                byte nbrWire, String tests, String gearCategory, String note, String composition) {
+    public Gear(int id, String denomination, String sensorType, String basicWorking, String role,
+                byte nbrWire, String tests, String category, String note, String composition) {
         this.id = id;
         this.denomination = denomination;
-        this.gearSensorType = gearSensorType;
+        this.sensorType = sensorType;
         this.basicWorking = basicWorking;
         this.role = role;
         this.nbrWire = nbrWire;
         this.tests = tests;
-        this.gearCategory = gearCategory;
+        this.category = category;
         this.note = note;
         this.composition = composition;
         this.representations = new ArrayList<>();
@@ -139,7 +151,7 @@ public class Gear implements Serializable {
     }
 
     //METHODS
-    public boolean addRepresentation(byte[] newRepresentation) {
+    public boolean addRepresentation(Representation newRepresentation) {
         return this.representations.add(newRepresentation);
     }
 
@@ -147,17 +159,33 @@ public class Gear implements Serializable {
         return this.signalTypes.add(newSignalType);
     }
 
+    public boolean create() {
+        // TODO : not finished
+//        GearDatabase.getInstance(null).getGearDao().insertGear(this);
+        return false;
+    }
+
+    public boolean update() {
+        // TODO : not finished
+        return false;
+    }
+
+    public static ArrayList<Gear> getAll() {
+        // TODO : not finished
+        return null;
+    }
+
     @Override
     public String toString() {
         return "Gear{" +
                 "id=" + id +
                 ", denomination='" + denomination + '\'' +
-                ", gearSensorType='" + gearSensorType + '\'' +
+                ", gearSensorType='" + sensorType + '\'' +
                 ", basicWorking='" + basicWorking + '\'' +
                 ", role='" + role + '\'' +
                 ", nbrWire=" + nbrWire +
                 ", tests='" + tests + '\'' +
-                ", gearCategory='" + gearCategory + '\'' +
+                ", gearCategory='" + category + '\'' +
                 ", note='" + note + '\'' +
                 ", composition='" + composition + '\'' +
                 '}';
