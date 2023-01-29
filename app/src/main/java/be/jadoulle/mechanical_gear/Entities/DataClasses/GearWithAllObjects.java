@@ -37,4 +37,13 @@ public class GearWithAllObjects {
     public void setSignalTypes(List<SignalType> signalTypes) {
         this.signalTypes = signalTypes;
     }
+
+    @Override
+    public String toString() {
+        return "GearWithAllObjects{" +
+                "gear=" + gear +
+                ", representations=" + representations +
+                ", signalTypes=" + signalTypes +
+                '}';
+    }
 }
