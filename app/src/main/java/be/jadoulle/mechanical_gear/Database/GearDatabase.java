@@ -6,9 +6,9 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-import be.jadoulle.mechanical_gear.POJO.Gear;
-import be.jadoulle.mechanical_gear.POJO.Representation;
-import be.jadoulle.mechanical_gear.POJO.SignalType;
+import be.jadoulle.mechanical_gear.Entities.Gear;
+import be.jadoulle.mechanical_gear.Entities.Representation;
+import be.jadoulle.mechanical_gear.Entities.SignalType;
 
 @Database(entities = {
         Gear.class,
@@ -27,7 +27,8 @@ public abstract class GearDatabase extends RoomDatabase {
         return INSTANCE;
     }
 
-    //get DAO class
+    //DAO class
     public abstract GearDAO getGearDao();
     public abstract SignalTypeDAO getSignalTypeDao();
+    public abstract RepresentationDAO getRepresentationDao();
 }

@@ -7,29 +7,25 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import be.jadoulle.mechanical_gear.POJO.SignalType;
+import be.jadoulle.mechanical_gear.Entities.SignalType;
 
 @Dao
-public interface SignalTypeDAO extends DAO<SignalType> {
-    @Override
+public interface SignalTypeDAO {
     @Query("SELECT * FROM signal_type WHERE id = :id")
     SignalType find(int id);
 
-    @Override
     @Query("SELECT * FROM signal_type")
-    ArrayList<SignalType> findAll();
+    List<SignalType> findAll();
 
-    @Override
     @Insert
-    boolean create(SignalType obj);
+    long create(SignalType obj);
 
-    @Override
     @Update
-    boolean update(SignalType obj);
+    int update(SignalType obj);
 
-    @Override
     @Delete
-    boolean delete(SignalType obj);
+    int delete(SignalType obj);
 
 }

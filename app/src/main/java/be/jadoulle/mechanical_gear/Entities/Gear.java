@@ -1,13 +1,11 @@
-package be.jadoulle.mechanical_gear.POJO;
+package be.jadoulle.mechanical_gear.Entities;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-
-import be.jadoulle.mechanical_gear.Database.GearDatabase;
+import java.util.List;
 
 /*
     sensor = capteur
@@ -34,8 +32,7 @@ public class Gear implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String denomination;
-    private ArrayList<Representation> representations;      //images (can have 0)
-
+    @ColumnInfo(name = "sensor_type")
     private String sensorType;
     @ColumnInfo(name = "basic_working")
     private String basicWorking;
@@ -43,10 +40,8 @@ public class Gear implements Serializable {
     @ColumnInfo(name = "nbr_wire")
     private byte nbrWire;
     private String tests;
-
-    private ArrayList<SignalType> signalTypes;      //images + text (can have 0)
     private String category;
-    private String note;                //(can be null)
+    private String note;
     private String composition;
 
     public int getId() {
@@ -61,13 +56,6 @@ public class Gear implements Serializable {
     }
     public void setDenomination(String denomination) {
         this.denomination = denomination;
-    }
-
-    public ArrayList<Representation> getRepresentations() {
-        return representations;
-    }
-    public void setRepresentations(ArrayList<Representation> representations) {
-        this.representations = representations;
     }
 
     public String getSensorType() {
@@ -105,13 +93,6 @@ public class Gear implements Serializable {
         this.tests = tests;
     }
 
-    public ArrayList<SignalType> getSignalTypes() {
-        return signalTypes;
-    }
-    public void setSignalTypes(ArrayList<SignalType> signalTypes) {
-        this.signalTypes = signalTypes;
-    }
-
     public String getCategory() {
         return category;
     }
@@ -146,19 +127,9 @@ public class Gear implements Serializable {
         this.category = category;
         this.note = note;
         this.composition = composition;
-        this.representations = new ArrayList<>();
-        this.signalTypes = new ArrayList<>();
     }
 
     //METHODS
-    public boolean addRepresentation(Representation newRepresentation) {
-        return this.representations.add(newRepresentation);
-    }
-
-    public boolean addSignalType(SignalType newSignalType) {
-        return this.signalTypes.add(newSignalType);
-    }
-
     public boolean create() {
         // TODO : not finished
 //        GearDatabase.getInstance(null).getGearDao().insertGear(this);
@@ -170,7 +141,7 @@ public class Gear implements Serializable {
         return false;
     }
 
-    public static ArrayList<Gear> getAll() {
+    public static List<Gear> getAll() {
         // TODO : not finished
         return null;
     }

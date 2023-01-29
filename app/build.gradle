@@ -30,8 +30,8 @@ android {
 
 dependencies {
     //Room
-    implementation 'androidx.room:room-runtime:2.5.0'
-    annotationProcessor 'androidx.room:room-compiler:2.5.0'
+    implementation 'androidx.room:room-runtime:2.4.3'
+    annotationProcessor 'androidx.room:room-compiler:2.4.3'
 
     //lifeCycle
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'

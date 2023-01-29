@@ -1,38 +1,34 @@
 package be.jadoulle.mechanical_gear.Database;
 
-import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Transaction;
 import androidx.room.Update;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import be.jadoulle.mechanical_gear.POJO.Gear;
+import be.jadoulle.mechanical_gear.Entities.DataClasses.GearWithAllObjects;
+import be.jadoulle.mechanical_gear.Entities.Gear;
 
 @Dao
-public interface GearDAO extends DAO<Gear> {
-    @Override
+public interface GearDAO {
+    @Transaction
     @Query("SELECT * FROM gear WHERE id = :id")
-    Gear find(int id);
+    GearWithAllObjects find(int id);
 
-//    @Query("SELECT * FROM gear LEFT JOIN signal_type ON gear.id = signal_type.gear_id ORDER BY gear.id")
-    @Override
+    @Transaction
     @Query("SELECT * FROM gear")
-    ArrayList<Gear> findAll();
+    List<GearWithAllObjects> findAll();
 
-    @Override
     @Insert
-    boolean create(Gear obj);
+    long create(Gear obj);
 
-    @Override
     @Update
-    boolean update(Gear obj);
+    int update(Gear obj);
 
-    @Override
     @Delete
-    boolean delete(Gear obj);
+    int delete(Gear obj);
 
 }
