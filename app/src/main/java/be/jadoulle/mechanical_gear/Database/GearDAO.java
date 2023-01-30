@@ -30,5 +30,4 @@ public interface GearDAO {
 
     @Delete
     int delete(Gear obj);
-
 }

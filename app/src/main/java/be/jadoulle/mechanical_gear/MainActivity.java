@@ -1,23 +1,12 @@
 package be.jadoulle.mechanical_gear;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.DrawableUtils;
-import androidx.core.graphics.BitmapCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
-import androidx.core.widget.ImageViewCompat;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
+
+import be.jadoulle.mechanical_gear.Database.GearDatabase;
 
 public class MainActivity extends AppCompatActivity {
     /*
@@ -39,6 +28,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         findViewById(R.id.ibtn_add_new_item).setOnClickListener(add_gear_listener);
+
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        GearDatabase.getInstance(this.getApplicationContext()).close();
+        System.out.println("close db");
+    }
 }

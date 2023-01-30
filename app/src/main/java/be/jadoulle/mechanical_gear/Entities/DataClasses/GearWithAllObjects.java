@@ -3,13 +3,14 @@ package be.jadoulle.mechanical_gear.Entities.DataClasses;
 import androidx.room.Embedded;
 import androidx.room.Relation;
 
+import java.io.Serializable;
 import java.util.List;
 
 import be.jadoulle.mechanical_gear.Entities.Gear;
 import be.jadoulle.mechanical_gear.Entities.Representation;
 import be.jadoulle.mechanical_gear.Entities.SignalType;
 
-public class GearWithAllObjects {
+public class GearWithAllObjects implements Serializable {
     @Embedded
     private Gear gear;
     @Relation(parentColumn = "id" , entityColumn = "gear_id")

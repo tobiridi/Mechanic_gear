@@ -130,22 +130,6 @@ public class Gear implements Serializable {
     }
 
     //METHODS
-    public boolean create() {
-        // TODO : not finished
-//        GearDatabase.getInstance(null).getGearDao().insertGear(this);
-        return false;
-    }
-
-    public boolean update() {
-        // TODO : not finished
-        return false;
-    }
-
-    public static List<Gear> getAll() {
-        // TODO : not finished
-        return null;
-    }
-
     @Override
     public String toString() {
         return "Gear{" +

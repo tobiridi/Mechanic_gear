@@ -22,10 +22,13 @@ public abstract class GearDatabase extends RoomDatabase {
     public static GearDatabase getInstance(Context context) {
         if(INSTANCE == null) {
             INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                    GearDatabase.class,"gearDatabase.db").build();
+                    GearDatabase.class,"gearDatabase.db")
+                    .fallbackToDestructiveMigration()
+                    .build();
         }
         return INSTANCE;
     }
+
 
     //DAO class
     public abstract GearDAO getGearDao();

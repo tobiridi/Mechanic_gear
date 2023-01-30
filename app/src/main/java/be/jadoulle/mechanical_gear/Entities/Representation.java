@@ -1,14 +1,19 @@
 package be.jadoulle.mechanical_gear.Entities;
 
 import static androidx.room.ColumnInfo.BLOB;
+import static androidx.room.ForeignKey.CASCADE;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 
-@Entity(tableName = "representation")
+@Entity(tableName = "representation",
+        foreignKeys = {
+            @ForeignKey(entity = Gear.class, parentColumns = {"id"}, childColumns = {"gear_id"}, onDelete = CASCADE)
+        })
 public class Representation implements Serializable {
     //ATTRIBUTES
     @PrimaryKey(autoGenerate = true)
