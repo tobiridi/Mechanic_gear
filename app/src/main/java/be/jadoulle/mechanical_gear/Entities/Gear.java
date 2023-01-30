@@ -1,7 +1,11 @@
-package be.jadoulle.mechanical_gear.POJO;
+package be.jadoulle.mechanical_gear.Entities;
+
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.List;
 
 /*
     sensor = capteur
@@ -22,19 +26,22 @@ import java.util.ArrayList;
     composition;        la matière de l'objet (saisie utilisateur)
  */
 
+@Entity(tableName = "gear")
 public class Gear implements Serializable {
     //ATTRIBUTES
+    @PrimaryKey(autoGenerate = true)
     private int id;
     private String denomination;
-    private ArrayList<byte[]> representations;      //images (can have 0)
-    private String gearSensorType;
+    @ColumnInfo(name = "sensor_type")
+    private String sensorType;
+    @ColumnInfo(name = "basic_working")
     private String basicWorking;
     private String role;
+    @ColumnInfo(name = "nbr_wire")
     private byte nbrWire;
     private String tests;
-    private ArrayList<SignalType> signalTypes;      //images + text (can have 0)
-    private String gearCategory;
-    private String note;                //(can be null)
+    private String category;
+    private String note;
     private String composition;
 
     public int getId() {
@@ -51,18 +58,11 @@ public class Gear implements Serializable {
         this.denomination = denomination;
     }
 
-    public ArrayList<byte[]> getRepresentations() {
-        return representations;
+    public String getSensorType() {
+        return sensorType;
     }
-    public void setRepresentations(ArrayList<byte[]> representations) {
-        this.representations = representations;
-    }
-
-    public String getGearSensorType() {
-        return gearSensorType;
-    }
-    public void setGearSensorType(String gearSensorType) {
-        this.gearSensorType = gearSensorType;
+    public void setSensorType(String sensorType) {
+        this.sensorType = sensorType;
     }
 
     public String getBasicWorking() {
@@ -93,18 +93,11 @@ public class Gear implements Serializable {
         this.tests = tests;
     }
 
-    public ArrayList<SignalType> getSignalTypes() {
-        return signalTypes;
+    public String getCategory() {
+        return category;
     }
-    public void setSignalTypes(ArrayList<SignalType> signalTypes) {
-        this.signalTypes = signalTypes;
-    }
-
-    public String getGearCategory() {
-        return gearCategory;
-    }
-    public void setGearCategory(String gearCategory) {
-        this.gearCategory = gearCategory;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public String getNote() {
@@ -122,42 +115,32 @@ public class Gear implements Serializable {
     }
 
     //CONSTRUCTOR
-    public Gear(int id, String denomination, String gearSensorType, String basicWorking, String role,
-                byte nbrWire, String tests, String gearCategory, String note, String composition) {
+    public Gear(int id, String denomination, String sensorType, String basicWorking, String role,
+                byte nbrWire, String tests, String category, String note, String composition) {
         this.id = id;
         this.denomination = denomination;
-        this.gearSensorType = gearSensorType;
+        this.sensorType = sensorType;
         this.basicWorking = basicWorking;
         this.role = role;
         this.nbrWire = nbrWire;
         this.tests = tests;
-        this.gearCategory = gearCategory;
+        this.category = category;
         this.note = note;
         this.composition = composition;
-        this.representations = new ArrayList<>();
-        this.signalTypes = new ArrayList<>();
     }
 
     //METHODS
-    public boolean addRepresentation(byte[] newRepresentation) {
-        return this.representations.add(newRepresentation);
-    }
-
-    public boolean addSignalType(SignalType newSignalType) {
-        return this.signalTypes.add(newSignalType);
-    }
-
     @Override
     public String toString() {
         return "Gear{" +
                 "id=" + id +
                 ", denomination='" + denomination + '\'' +
-                ", gearSensorType='" + gearSensorType + '\'' +
+                ", gearSensorType='" + sensorType + '\'' +
                 ", basicWorking='" + basicWorking + '\'' +
                 ", role='" + role + '\'' +
                 ", nbrWire=" + nbrWire +
                 ", tests='" + tests + '\'' +
-                ", gearCategory='" + gearCategory + '\'' +
+                ", gearCategory='" + category + '\'' +
                 ", note='" + note + '\'' +
                 ", composition='" + composition + '\'' +
                 '}';

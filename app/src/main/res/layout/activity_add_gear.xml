@@ -55,18 +55,18 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp">
 
-                <TextView
-                    style="@style/text_view"
-                    android:layout_height="match_parent"
-                    android:text="@string/gear_representation" />
+<!--                <TextView-->
+<!--                    style="@style/text_view"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:text="@string/gear_representation" />-->
 
-                <Button
-                    android:id="@+id/btn_gear_representation"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="@string/gear_representation"
-                    android:drawableLeft="@drawable/add_a_photo"
-                    android:text="@string/gear_representation" />
+<!--                <Button-->
+<!--                    android:id="@+id/btn_gear_representation"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:contentDescription="@string/gear_representation"-->
+<!--                    android:drawableLeft="@drawable/add_a_photo"-->
+<!--                    android:text="@string/gear_representation" />-->
             </TableRow>
 
             <TableRow
@@ -165,31 +165,31 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp">
 
-                <TextView
-                    style="@style/text_view"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical"
-                    android:text="@string/gear_signalType" />
+<!--                <TextView-->
+<!--                    style="@style/text_view"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_gravity="center_vertical"-->
+<!--                    android:text="@string/gear_signalType" />-->
 
                 <LinearLayout
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <EditText
-                        android:id="@+id/et_gear_signalType"
-                        style="@style/edit_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:autofillHints="name"
-                        android:hint="@string/gear_signalType" />
+<!--                    <EditText-->
+<!--                        android:id="@+id/et_gear_signalType"-->
+<!--                        style="@style/edit_text"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:autofillHints="name"-->
+<!--                        android:hint="@string/gear_signalType" />-->
 
-                    <Button
-                        android:id="@+id/btn_gear_signalType"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:contentDescription="@string/gear_signalType"
-                        android:drawableLeft="@drawable/add_a_photo"
-                        android:text="@string/gear_signalType" />
+<!--                    <Button-->
+<!--                        android:id="@+id/btn_gear_signalType"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:contentDescription="@string/gear_signalType"-->
+<!--                        android:drawableLeft="@drawable/add_a_photo"-->
+<!--                        android:text="@string/gear_signalType" />-->
                 </LinearLayout>
             </TableRow>
 

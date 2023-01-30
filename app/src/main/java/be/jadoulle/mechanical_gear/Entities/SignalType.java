@@ -1,13 +1,26 @@
-package be.jadoulle.mechanical_gear.POJO;
+package be.jadoulle.mechanical_gear.Entities;
+
+import static androidx.room.ForeignKey.CASCADE;
+
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 
+@Entity(tableName = "signal_type",
+        foreignKeys = {
+            @ForeignKey(entity = Gear.class, parentColumns = {"id"}, childColumns = {"gear_id"}, onDelete = CASCADE)
+        })
 public class SignalType implements Serializable {
     //ATTRIBUTES
+    @PrimaryKey(autoGenerate = true)
     private int id;
     private String text;
     private byte[] picture;
-    private Gear gear;
+    @ColumnInfo(name = "gear_id")
+    private int gearId;
 
     public int getId() {
         return id;
@@ -30,20 +43,19 @@ public class SignalType implements Serializable {
         this.picture = picture;
     }
 
-    public Gear getGear() {
-        return gear;
+    public int getGearId() {
+        return gearId;
     }
-    public void setGear(Gear gear) {
-        this.gear = gear;
+    public void setGearId(int gearId) {
+        this.gearId = gearId;
     }
 
     //CONSTRUCTOR
-    public SignalType(int id, String text, byte[] picture, Gear gear) {
+    public SignalType(int id, String text, byte[] picture, int gearId) {
         this.id = id;
         this.text = text;
         this.picture = picture;
-        this.gear = gear;
-        this.gear.addSignalType(this);
+        this.gearId = gearId;
     }
 
     //METHODS
@@ -52,6 +64,7 @@ public class SignalType implements Serializable {
         return "SignalType{" +
                 "id=" + id +
                 ", text='" + text + '\'' +
+                ", gearId='" + gearId + '\'' +
                 '}';
     }
 }
