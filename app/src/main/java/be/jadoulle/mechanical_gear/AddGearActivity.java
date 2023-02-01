@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import be.jadoulle.mechanical_gear.AsyncTask.GearCreateAsyncTask;
+import be.jadoulle.mechanical_gear.Utils.Utils;
 
 public class AddGearActivity extends AppCompatActivity {
 
@@ -22,9 +23,6 @@ public class AddGearActivity extends AppCompatActivity {
     private View.OnClickListener validate_listener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-//            Toast toast = Toast.makeText(AddGearActivity.this, "validation in progress ...", Toast.LENGTH_SHORT);
-//            toast.show();
-
             EditText denomination = findViewById(R.id.et_gear_denomination);
             EditText sensorType = findViewById(R.id.et_gear_sensorType);
             EditText basicWorking = findViewById(R.id.et_gear_basicWorking);
@@ -35,7 +33,7 @@ public class AddGearActivity extends AppCompatActivity {
             EditText composition = findViewById(R.id.et_gear_composition);
             EditText note = findViewById(R.id.et_gear_note);
 
-            //call async task
+            //call async task, create a new gear
             new GearCreateAsyncTask(AddGearActivity.this).execute(
                     denomination.getText().toString(),
                     sensorType.getText().toString(),
@@ -61,12 +59,12 @@ public class AddGearActivity extends AppCompatActivity {
 
     public void confirmGearCreation(boolean isCreate) {
         if(isCreate) {
-            Toast.makeText(AddGearActivity.this, "Gear create with success", Toast.LENGTH_LONG).show();
+            Utils.showToast(this, this.getResources().getString(R.string.gear_creation_message), Toast.LENGTH_SHORT);
             setResult(RESULT_OK);
             finish();
         }
         else {
-            Toast.makeText(AddGearActivity.this, "Gear not created", Toast.LENGTH_LONG).show();
+            Utils.showToast(this, this.getResources().getString(R.string.gear_creation_failed_message), Toast.LENGTH_SHORT);
         }
     }
 

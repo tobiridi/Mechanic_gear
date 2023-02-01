@@ -15,11 +15,11 @@ import be.jadoulle.mechanical_gear.Entities.Gear;
 @Dao
 public interface GearDAO {
     @Transaction
-    @Query("SELECT * FROM gear WHERE id = :id")
+    @Query("SELECT * FROM gear WHERE id = :id ORDER BY id")
     GearWithAllObjects find(int id);
 
     @Transaction
-    @Query("SELECT * FROM gear")
+    @Query("SELECT * FROM gear ORDER BY id")
     List<GearWithAllObjects> findAll();
 
     @Insert

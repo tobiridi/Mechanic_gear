@@ -8,9 +8,12 @@
     <string name="gear_nbrWire">Nombre de fils</string>
     <string name="gear_signalType">Type de signal</string>
     <string name="gear_gearCategory">Catégorie de la pièce</string>
-    <string name="cancel_message">Annuler</string>
-    <string name="validate_message">Valider</string>
+    <string name="cancel_text">Annuler</string>
+    <string name="validate_text">Valider</string>
     <string name="add_gear_title">Ajouter une nouvelle pièce</string>
     <string name="details_gear">Détails de la pièce</string>
     <string name="app_description">Voici une description de l\'application</string>
+    <string name="gear_list_update_message">Liste des pièces mise à jour</string>
+    <string name="gear_creation_message">Nouvelle pièce créée</string>
+    <string name="gear_creation_failed_message">La nouvelle pièce n\'a pas pu être créée</string>
 </resources>
