@@ -1,10 +1,15 @@
 <resources>
     <string name="app_name" translatable="false">Mechanical_gear</string>
     <string name="app_description">An application description</string>
-    <string name="cancel_message">Cancel</string>
-    <string name="validate_message">Validate</string>
+    <!-- text displayed -->
+    <string name="cancel_text">Cancel</string>
+    <string name="validate_text">Validate</string>
     <string name="add_gear_title">Add a new gear</string>
     <string name="details_gear">Details of the gear</string>
+    <!-- message displayed -->
+    <string name="gear_creation_message">Gear created</string>
+    <string name="gear_creation_failed_message">Gear creation failed</string>
+    <string name="gear_list_update_message">Gear list updated</string>
     <!-- string of "Gear" JAVA object -->
     <string name="gear_denomination">Denomination</string>
     <string name="gear_representation">Representation</string>

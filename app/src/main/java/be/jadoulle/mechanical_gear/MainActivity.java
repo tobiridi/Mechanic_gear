@@ -13,8 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import be.jadoulle.mechanical_gear.AsyncTask.GearRetrieveAsyncTask;
-import be.jadoulle.mechanical_gear.Database.GearDatabase;
 import be.jadoulle.mechanical_gear.Entities.DataClasses.GearWithAllObjects;
+import be.jadoulle.mechanical_gear.Utils.Utils;
 import be.jadoulle.mechanical_gear.Views.GearAdapter;
 
 public class MainActivity extends AppCompatActivity {
@@ -47,22 +47,25 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        System.out.println("je passe dans le on resume");
 
         //call async task, retrieve all gears
-        this.allGears.clear();
-        new GearRetrieveAsyncTask(MainActivity.this).execute();
+        new GearRetrieveAsyncTask(this).execute();
     }
 
     public void refreshGearList(List<GearWithAllObjects> allGears) {
+        //TODO : optimise, refresh only if the list change
+        // update gear, delete gear, add gear
         try {
+            if(!this.allGears.isEmpty()) {
+                this.allGears.clear();
+            }
             this.allGears.addAll(allGears);
             this.recyclerView.getAdapter().notifyDataSetChanged();
-            Toast.makeText(this, "list updated", Toast.LENGTH_SHORT).show();
+            Utils.showToast(this, this.getResources().getString(R.string.gear_list_update_message), Toast.LENGTH_SHORT);
         }
         catch (NullPointerException e) {
             e.printStackTrace();
-            Toast.makeText(this, "list update failed", Toast.LENGTH_SHORT).show();
+            Utils.showToast(this, "list update failed", Toast.LENGTH_SHORT);
         }
 
     }

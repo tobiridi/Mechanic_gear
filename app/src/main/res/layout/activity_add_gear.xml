@@ -50,10 +50,10 @@
                     android:hint="@string/gear_denomination" />
             </TableRow>
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp">
+<!--            <TableRow-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginBottom="10dp">-->
 
 <!--                <TextView-->
 <!--                    style="@style/text_view"-->
@@ -67,7 +67,7 @@
 <!--                    android:contentDescription="@string/gear_representation"-->
 <!--                    android:drawableLeft="@drawable/add_a_photo"-->
 <!--                    android:text="@string/gear_representation" />-->
-            </TableRow>
+<!--            </TableRow>-->
 
             <TableRow
                 android:layout_width="match_parent"
@@ -160,10 +160,10 @@
                     android:hint="@string/gear_tests" />
             </TableRow>
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp">
+<!--            <TableRow-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginBottom="10dp">-->
 
 <!--                <TextView-->
 <!--                    style="@style/text_view"-->
@@ -171,9 +171,9 @@
 <!--                    android:layout_gravity="center_vertical"-->
 <!--                    android:text="@string/gear_signalType" />-->
 
-                <LinearLayout
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+<!--                <LinearLayout-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:orientation="vertical">-->
 
 <!--                    <EditText-->
 <!--                        android:id="@+id/et_gear_signalType"-->
@@ -190,8 +190,8 @@
 <!--                        android:contentDescription="@string/gear_signalType"-->
 <!--                        android:drawableLeft="@drawable/add_a_photo"-->
 <!--                        android:text="@string/gear_signalType" />-->
-                </LinearLayout>
-            </TableRow>
+<!--                </LinearLayout>-->
+<!--            </TableRow>-->
 
             <TableRow
                 android:layout_width="match_parent"
@@ -255,13 +255,13 @@
                     android:id="@+id/btn_cancel"
                     style="@style/btn_cancel"
                     android:layout_height="wrap_content"
-                    android:text="@string/cancel_message" />
+                    android:text="@string/cancel_text" />
 
                 <Button
                     android:id="@+id/btn_validate"
                     style="@style/btn_validate"
                     android:layout_height="wrap_content"
-                    android:text="@string/validate_message" />
+                    android:text="@string/validate_text" />
 
             </TableRow>
 

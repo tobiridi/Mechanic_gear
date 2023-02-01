@@ -20,7 +20,6 @@ public class GearRetrieveAsyncTask extends AsyncTask<Void, Void, List<GearWithAl
         List<GearWithAllObjects> allGears = null;
         try {
             GearDatabase database = GearDatabase.getInstance(this.activity.getApplicationContext());
-
             allGears = database.getGearDao().findAll();
         }
         catch (Exception e) {
@@ -33,7 +32,7 @@ public class GearRetrieveAsyncTask extends AsyncTask<Void, Void, List<GearWithAl
     @Override
     protected void onPostExecute(List<GearWithAllObjects> allGears) {
         super.onPostExecute(allGears);
-        System.out.println("nombre d objet : " + allGears.size());
+        System.out.println("nombre d objet gear : " + allGears.size());
         for (GearWithAllObjects gear : allGears) {
             System.out.println("gear entier : " + gear);
         }
