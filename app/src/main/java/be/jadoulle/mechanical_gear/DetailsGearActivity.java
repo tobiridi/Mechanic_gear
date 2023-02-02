@@ -2,36 +2,42 @@ package be.jadoulle.mechanical_gear;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.Constraints;
 
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
+
+import be.jadoulle.mechanical_gear.AsyncTask.RepresentationCreateAsyncTask;
 import be.jadoulle.mechanical_gear.Entities.DataClasses.GearWithAllObjects;
-import be.jadoulle.mechanical_gear.Entities.Gear;
+import be.jadoulle.mechanical_gear.Entities.Representation;
+import be.jadoulle.mechanical_gear.Utils.ActivityCode;
 import be.jadoulle.mechanical_gear.Utils.Utils;
 
 public class DetailsGearActivity extends AppCompatActivity {
     private GearWithAllObjects selectedGear;
     private TableLayout tableLayout;
+    private LinearLayout representationLayout;
 
     private View.OnClickListener add_representation_listener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            //TODO : optimise with camera application
             //TODO : not implemented
             Intent intentCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            startActivityForResult(intentCamera,1);
+            startActivityForResult(intentCamera, ActivityCode.DETAILS_GEAR_ACTIVITY_CODE);
         }
     };
 
@@ -49,6 +55,7 @@ public class DetailsGearActivity extends AppCompatActivity {
         setContentView(R.layout.activity_details_gear);
 
         this.tableLayout = findViewById(R.id.tl_details_gear);
+        this.representationLayout = findViewById(R.id.ll_gear_representations);
 
         findViewById(R.id.btn_add_representation).setOnClickListener(add_representation_listener);
         findViewById(R.id.btn_add_signalType).setOnClickListener(add_signalType_listener);
@@ -56,27 +63,61 @@ public class DetailsGearActivity extends AppCompatActivity {
         //get selected gear from recycler view
         this.selectedGear = (GearWithAllObjects) this.getIntent().getSerializableExtra("selectedGear");
 
-        //add tableRow if data
-        this.addTableRowForData();
+        //add data of a gear
+        this.addDataInLayout();
     }
 
-    private void addTableRowForData() {
+    private void addDataInLayout() {
         String[] fields = this.gearFields();
         String[] gearData = this.selectedGear.getGear().getAllDataToStringArray();
 
-        //TODO : representation
-        // gear
-        // signalType (before gear.getNote())
+        /*
+         * order of table row data
+         * gear's representations
+         * gear info
+         * gear's signalType
+         */
+        // TODO : signalType (before gear.getNote())
 
-        //TODO : add signalType array and representation array
         for (int i = 0; i < fields.length; i++) {
-            if(gearData[i] != null) {
-                this.addTableRow(fields[i], gearData[i]);
+            //gear's representations
+            if(fields[i].equals(this.getResources().getString(R.string.gear_representation))) {
+                if(!this.selectedGear.getRepresentations().isEmpty()) {
+                    this.addPictureInTableRow(fields[i]);
+                }
             }
+            //gear info, fields and gear data not the same index
+            else if(gearData[i-1] != null) {
+                this.addTableRow(fields[i], gearData[i-1]);
+            }
+            //TODO : gear's signal Type
         }
     }
 
-    private void addTableRow(String text, String data) {
+    private void addPictureInTableRow(String field) {
+        TableRow row = null;
+        TextView textView = new TextView(this);
+
+        //configure textView
+        TableRow.LayoutParams params = new TableRow.LayoutParams();
+        params.setMargins(0,0,10,0);
+        textView.setLayoutParams(params);
+        textView.setTextAppearance(R.style.text_view);
+        textView.setText(field);
+
+        //add gear's representations
+        if(field.equals(this.getResources().getString(R.string.gear_representation))) {
+            row = findViewById(R.id.tr_gear_representations);
+            row.addView(textView, 0);
+            this.refreshRepresentations();
+        }
+        //add gear's signal Type
+        else {
+            //TODO : refresh signal Type
+        }
+    }
+
+    private void addTableRow(String field, String data) {
         TableRow row = new TableRow(this);
         TextView textView = new TextView(this);
         TextView textViewData = new TextView(this);
@@ -89,7 +130,7 @@ public class DetailsGearActivity extends AppCompatActivity {
         params.setMargins(0,0,10,0);
         textView.setLayoutParams(params);
         textView.setTextAppearance(R.style.text_view);
-        textView.setText(text);
+        textView.setText(field);
 
         //configure textView for data
         textViewData.setMaxWidth(500);
@@ -99,15 +140,14 @@ public class DetailsGearActivity extends AppCompatActivity {
 
         row.addView(textView);
         row.addView(textViewData);
-        // TODO : change when representation and signalType are ready
         this.tableLayout.addView(row);
     }
 
     private String[] gearFields() {
         Resources resources = this.getResources();
-        //TODO : not finished, because empty implemententation for representation and signalType
+        //TODO : not finished, because empty implemententation for signalType
         return new String[] {
-//                resources.getString(R.string.gear_representation),
+                resources.getString(R.string.gear_representation),
                 resources.getString(R.string.gear_denomination),
                 resources.getString(R.string.gear_gearCategory),
                 resources.getString(R.string.gear_gearSensorType),
@@ -124,5 +164,49 @@ public class DetailsGearActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        if(data != null && requestCode == ActivityCode.DETAILS_GEAR_ACTIVITY_CODE && resultCode == RESULT_OK) {
+            Bundle bundle = data.getExtras();
+            //get picture
+            Bitmap picture = (Bitmap) bundle.get("data");
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            picture.compress(Bitmap.CompressFormat.PNG, 80, outputStream);
+
+            //save representation
+            Representation newRepresentation = new Representation(0,outputStream.toByteArray(),this.selectedGear.getGear().getId());
+
+            //call async task
+            new RepresentationCreateAsyncTask(DetailsGearActivity.this).execute(newRepresentation);
+
+            //add picture
+            if (this.selectedGear.getRepresentations().isEmpty()) {
+                this.selectedGear.addRepresentation(newRepresentation);
+                this.addPictureInTableRow(this.getResources().getString(R.string.gear_representation));
+            }
+            else {
+                this.selectedGear.addRepresentation(newRepresentation);
+                this.refreshRepresentations();
+            }
+
+        }
+    }
+
+    private void refreshRepresentations() {
+        this.representationLayout.removeAllViews();
+        for (Representation rep : this.selectedGear.getRepresentations()) {
+            ImageView img = new ImageView(this);
+            img.setImageBitmap(BitmapFactory.decodeByteArray(rep.getPicture(),0, rep.getPicture().length));
+            img.setPaddingRelative(10,0,0,0);
+            this.representationLayout.addView(img);
+        }
+    }
+
+    public void confirmRepresentationCreation(boolean isCreated) {
+        if(isCreated) {
+            Utils.showToast(this, "représentation créer", Toast.LENGTH_LONG);
+        }
+        else {
+            Utils.showToast(this, "représentation non créer", Toast.LENGTH_LONG);
+        }
     }
 }

@@ -16,8 +16,6 @@ public class GearCreateAsyncTask extends AsyncTask<String, Void, Boolean> {
     @Override
     protected Boolean doInBackground(String... strings) {
         try {
-            GearDatabase database = GearDatabase.getInstance(this.activity.getApplicationContext());
-
             //replace empty string to null
             for (int i = 0; i < strings.length; i++) {
                 if (strings[i].isEmpty())
@@ -42,7 +40,9 @@ public class GearCreateAsyncTask extends AsyncTask<String, Void, Boolean> {
                 }
             }
 
+            GearDatabase database = GearDatabase.getInstance(this.activity.getApplicationContext());
             Gear newGear = new Gear(0, denomination, sensorType, basicWorking, role, nbrWire, tests, category, note, composition);
+
             System.out.println("newGear : " + newGear);
             long idNewGear = database.getGearDao().create(newGear);
             System.out.println("newGear id : " + idNewGear);

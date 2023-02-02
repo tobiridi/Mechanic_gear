@@ -3,6 +3,7 @@ package be.jadoulle.mechanical_gear.Views;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -37,7 +38,6 @@ public class GearViewHolder extends RecyclerView.ViewHolder {
             byte[] picture = gearWithAllObjects.getRepresentations().get(0).getPicture();
             Bitmap bitmap = BitmapFactory.decodeByteArray(picture,0, picture.length);
             this.gearRepresentation.setImageBitmap(bitmap);
-            this.gearRepresentation.setPaddingRelative(10,10,10,10);
         }
 
         //bind a "GearWithAllObjects" who will be send to details activity
