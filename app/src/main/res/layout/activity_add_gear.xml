@@ -50,6 +50,24 @@
                     android:hint="@string/gear_denomination" />
             </TableRow>
 
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp">
+
+                <TextView
+                    style="@style/text_view"
+                    android:layout_height="match_parent"
+                    android:text="@string/gear_gearCategory" />
+
+                <EditText
+                    android:id="@+id/et_gear_gearCategory"
+                    style="@style/edit_text"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="name"
+                    android:hint="@string/gear_gearCategory" />
+            </TableRow>
+
 <!--            <TableRow-->
 <!--                android:layout_width="match_parent"-->
 <!--                android:layout_height="wrap_content"-->
@@ -201,24 +219,6 @@
                 <TextView
                     style="@style/text_view"
                     android:layout_height="match_parent"
-                    android:text="@string/gear_gearCategory" />
-
-                <EditText
-                    android:id="@+id/et_gear_gearCategory"
-                    style="@style/edit_text"
-                    android:layout_height="wrap_content"
-                    android:autofillHints="name"
-                    android:hint="@string/gear_gearCategory" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp">
-
-                <TextView
-                    style="@style/text_view"
-                    android:layout_height="match_parent"
                     android:text="@string/gear_composition" />
 
                 <EditText
@@ -262,10 +262,8 @@
                     style="@style/btn_validate"
                     android:layout_height="wrap_content"
                     android:text="@string/validate_text" />
-
             </TableRow>
 
         </TableLayout>
     </ScrollView>
-
 </LinearLayout>
