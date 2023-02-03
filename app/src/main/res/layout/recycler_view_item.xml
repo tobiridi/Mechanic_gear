@@ -4,16 +4,14 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:background="@drawable/button_gradient_corner_background"
-    android:padding="30dp"
     android:layout_margin="5dp">
 
     <ImageView
         android:id="@+id/iv_recycler_item"
         android:src="@drawable/add_a_photo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
-        android:layout_gravity="center"/>
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginEnd="10dp" />
 
     <TextView
         android:id="@+id/tv_recycler_item"

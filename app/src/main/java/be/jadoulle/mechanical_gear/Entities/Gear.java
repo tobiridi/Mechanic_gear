@@ -144,5 +144,19 @@ public class Gear implements Serializable {
                 ", composition='" + composition + '\'' +
                 '}';
     }
+
+    public String[] getAllDataToStringArray() {
+        return new String[] {
+                this.denomination,
+                this.category,
+                this.sensorType,
+                this.basicWorking,
+                this.role,
+                this.nbrWire == 0 ? null : String.valueOf(this.nbrWire),
+                this.tests,
+                this.composition,
+                this.note,
+        };
+    }
 }
 

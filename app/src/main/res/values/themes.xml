@@ -45,4 +45,9 @@
         <item name="android:backgroundTint">#169E48</item>
     </style>
 
+    <style name="btn_option">
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:backgroundTint">#5797AC</item>
+    </style>
+
 </resources>

@@ -1,11 +1,14 @@
 <resources>
-    <string name="app_name" translatable="false">Mechanical_gear</string>
+    <string name="app_name">Mechanical_gear</string>
     <string name="app_description">An application description</string>
     <!-- text displayed -->
     <string name="cancel_text">Cancel</string>
     <string name="validate_text">Validate</string>
+    <string name="back_text">Back</string>
     <string name="add_gear_title">Add a new gear</string>
-    <string name="details_gear">Details of the gear</string>
+    <string name="details_gear_title">Gear details</string>
+    <string name="add_representation_text">Add representation</string>
+    <string name="add_signal_type_text">Add signal type</string>
     <!-- message displayed -->
     <string name="gear_creation_message">Gear created</string>
     <string name="gear_creation_failed_message">Gear creation failed</string>
@@ -13,13 +16,13 @@
     <!-- string of "Gear" JAVA object -->
     <string name="gear_denomination">Denomination</string>
     <string name="gear_representation">Representation</string>
-    <string name="gear_gearSensorType">Sensor type</string>
+    <string name="gear_gearSensorType">Type</string>
     <string name="gear_basicWorking">Basic working</string>
     <string name="gear_role">Role</string>
     <string name="gear_nbrWire">Number of wire</string>
     <string name="gear_tests" translatable="false">Tests</string>
     <string name="gear_signalType">Signal type</string>
-    <string name="gear_gearCategory">Gear category</string>
+    <string name="gear_gearCategory">Sensor/Actuator</string>
     <string name="gear_note" translatable="false">Note</string>
     <string name="gear_composition" translatable="false">Composition</string>
 </resources>

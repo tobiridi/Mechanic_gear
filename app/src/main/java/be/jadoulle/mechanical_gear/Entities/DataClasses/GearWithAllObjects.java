@@ -39,6 +39,7 @@ public class GearWithAllObjects implements Serializable {
         this.signalTypes = signalTypes;
     }
 
+    //METHODS
     @Override
     public String toString() {
         return "GearWithAllObjects{" +
@@ -46,5 +47,13 @@ public class GearWithAllObjects implements Serializable {
                 ", representations=" + representations +
                 ", signalTypes=" + signalTypes +
                 '}';
+    }
+
+    public boolean addRepresentation(Representation newRepresentation) {
+        return this.representations.add(newRepresentation);
+    }
+
+    public boolean addSignalType(SignalType newSignalType) {
+        return this.signalTypes.add(newSignalType);
     }
 }
