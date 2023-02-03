@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">Mechanical_gear</string>
+    <string name="app_name">Mechanical_gear</string>
     <string name="app_description">An application description</string>
     <!-- text displayed -->
     <string name="cancel_text">Cancel</string>

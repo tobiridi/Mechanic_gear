@@ -19,4 +19,5 @@
     <string name="back_text">Retour</string>
     <string name="add_representation_text">Ajouter une représentation</string>
     <string name="add_signal_type_text">Ajouter un type de signal</string>
+    <string name="app_name" translatable="false">MECA-Composants</string>
 </resources>
