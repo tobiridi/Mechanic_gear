@@ -5,14 +5,17 @@
     <string name="cancel_text">Cancel</string>
     <string name="validate_text">Validate</string>
     <string name="back_text">Back</string>
-    <string name="add_gear_title">Add a new gear</string>
-    <string name="details_gear_title">Gear details</string>
     <string name="add_representation_text">Add representation</string>
     <string name="add_signal_type_text">Add signal type</string>
+    <string name="delete_text">Delete</string>
+    <string name="modify_text">Modify</string>
+    <string name="details_gear_title">Gear details</string>
+    <string name="add_gear_title">Add a new gear</string>
     <!-- message displayed -->
     <string name="gear_creation_message">Gear created</string>
     <string name="gear_creation_failed_message">Gear creation failed</string>
     <string name="gear_list_update_message">Gear list updated</string>
+    <string name="gear_delete_message">Gear deleted</string>
     <!-- string of "Gear" JAVA object -->
     <string name="gear_denomination">Denomination</string>
     <string name="gear_representation">Representation</string>

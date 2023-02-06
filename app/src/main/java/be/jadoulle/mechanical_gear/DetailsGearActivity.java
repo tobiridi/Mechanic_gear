@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 
+import be.jadoulle.mechanical_gear.AsyncTask.GearDeleteAsyncTask;
 import be.jadoulle.mechanical_gear.AsyncTask.RepresentationCreateAsyncTask;
 import be.jadoulle.mechanical_gear.Entities.DataClasses.GearWithAllObjects;
 import be.jadoulle.mechanical_gear.Entities.Representation;
@@ -31,17 +32,20 @@ public class DetailsGearActivity extends AppCompatActivity {
     private TableLayout tableLayout;
     private LinearLayout representationLayout;
 
-    private View.OnClickListener add_representation_listener = new View.OnClickListener() {
+    private View.OnClickListener delete_gear_listener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            //call async task, delete gear
+            new GearDeleteAsyncTask(DetailsGearActivity.this).execute(selectedGear.getGear());
+
+            //TODO : move to add gear activity
             //TODO : optimise with camera application
-            //TODO : not implemented
-            Intent intentCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            startActivityForResult(intentCamera, ActivityCode.DETAILS_GEAR_ACTIVITY_CODE);
+//            Intent intentCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//            startActivityForResult(intentCamera, ActivityCode.DETAILS_GEAR_ACTIVITY_CODE);
         }
     };
 
-    private View.OnClickListener add_signalType_listener = new View.OnClickListener() {
+    private View.OnClickListener modify_gear_listener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             //TODO : not implemented
@@ -57,8 +61,8 @@ public class DetailsGearActivity extends AppCompatActivity {
         this.tableLayout = findViewById(R.id.tl_details_gear);
         this.representationLayout = findViewById(R.id.ll_gear_representations);
 
-        findViewById(R.id.btn_add_representation).setOnClickListener(add_representation_listener);
-        findViewById(R.id.btn_add_signalType).setOnClickListener(add_signalType_listener);
+        findViewById(R.id.btn_delete).setOnClickListener(delete_gear_listener);
+        findViewById(R.id.btn_modify).setOnClickListener(modify_gear_listener);
 
         //get selected gear from recycler view
         this.selectedGear = (GearWithAllObjects) this.getIntent().getSerializableExtra("selectedGear");
@@ -165,6 +169,7 @@ public class DetailsGearActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        //TODO : move all to add gear activity
         if(data != null && requestCode == ActivityCode.DETAILS_GEAR_ACTIVITY_CODE && resultCode == RESULT_OK) {
             Bundle bundle = data.getExtras();
             //get picture
@@ -192,6 +197,7 @@ public class DetailsGearActivity extends AppCompatActivity {
     }
 
     private void refreshRepresentations() {
+        //TODO : move all to add gear activity
         this.representationLayout.removeAllViews();
         for (Representation rep : this.selectedGear.getRepresentations()) {
             ImageView img = new ImageView(this);
@@ -202,11 +208,26 @@ public class DetailsGearActivity extends AppCompatActivity {
     }
 
     public void confirmRepresentationCreation(boolean isCreated) {
+        //TODO : move all to add gear activity
         if(isCreated) {
             Utils.showToast(this, "représentation créer", Toast.LENGTH_LONG);
         }
         else {
             Utils.showToast(this, "représentation non créer", Toast.LENGTH_LONG);
+        }
+    }
+
+    public void confirmGearSuppression(boolean isDelete) {
+        if (isDelete) {
+            Utils.showToast(this, this.getResources().getString(R.string.gear_delete_message), Toast.LENGTH_SHORT);
+            //TODO : back and refresh list
+            Intent backIntent = new Intent();
+            backIntent.putExtra("deletedGear", this.selectedGear);
+            setResult(RESULT_OK, backIntent);
+            finish();
+        }
+        else {
+            Utils.showToast(this, "gear not deleted ", Toast.LENGTH_SHORT);
         }
     }
 }

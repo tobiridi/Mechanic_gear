@@ -34,16 +34,19 @@
                 android:layout_height="wrap_content">
 
                 <Button
-                    android:id="@+id/btn_add_representation"
-                    style="@style/btn_option"
+                    android:id="@+id/btn_delete"
+                    style="@style/btn_cancel"
                     android:layout_height="wrap_content"
-                    android:text="@string/add_representation_text" />
+                    android:drawableLeft="@drawable/delete_gear"
+                    android:text="@string/delete_text" />
 
                 <Button
-                    android:id="@+id/btn_add_signalType"
+                    android:id="@+id/btn_modify"
                     style="@style/btn_option"
                     android:layout_height="wrap_content"
-                    android:text="@string/add_signal_type_text" />
+                    android:drawableLeft="@drawable/edit_gear"
+                    android:text="@string/modify_text" />
+
             </TableRow>
 
             <!-- gear's representations -->

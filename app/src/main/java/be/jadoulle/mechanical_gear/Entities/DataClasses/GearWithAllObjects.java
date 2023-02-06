@@ -5,6 +5,7 @@ import androidx.room.Relation;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 import be.jadoulle.mechanical_gear.Entities.Gear;
 import be.jadoulle.mechanical_gear.Entities.Representation;
@@ -47,6 +48,19 @@ public class GearWithAllObjects implements Serializable {
                 ", representations=" + representations +
                 ", signalTypes=" + signalTypes +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || this.getClass() != o.getClass()) return false;
+        GearWithAllObjects other = (GearWithAllObjects) o;
+        return this.gear.equals(other.gear);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(gear, representations, signalTypes);
     }
 
     public boolean addRepresentation(Representation newRepresentation) {

@@ -5,6 +5,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /*
     sensor = capteur
@@ -143,6 +144,19 @@ public class Gear implements Serializable {
                 ", note='" + note + '\'' +
                 ", composition='" + composition + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Gear other = (Gear) o;
+        return this.id == other.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, denomination, sensorType, basicWorking, role, nbrWire, tests, category, note, composition);
     }
 
     public String[] getAllDataToStringArray() {

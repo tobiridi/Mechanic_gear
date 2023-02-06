@@ -55,12 +55,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(data != null && requestCode == ActivityCode.MAIN_ACTIVITY_CODE && resultCode == RESULT_OK) {
+            //TODO : maybe change if add gear have all data at the creation,
+            // so don't call db because we have the gear
             //get new gear item
             int newIdGear = data.getIntExtra("idNewGear", 0);
+            GearWithAllObjects deletedGear = (GearWithAllObjects) data.getSerializableExtra("deletedGear");
+
             if(newIdGear > 0) {
-                System.out.println("id recup main activity : " + newIdGear);
                 //call async task, retrieve the gear
                 new GearRetrieveAsyncTask(this).execute(newIdGear);
+            }
+            else if (deletedGear != null) {
+                //refresh Recycler View
+                this.deleteItemGearList(deletedGear);
             }
         }
     }
@@ -101,7 +108,9 @@ public class MainActivity extends AppCompatActivity {
     public void updateItemGearList(GearWithAllObjects updatedGearWithAllObjects) {
         //TODO : not implemented
 //        try {
-//            this.recyclerView.getAdapter().notifyItemInserted(this.allGears.size() -1);
+//            int position = this.allGears.indexOf(updatedGearWithAllObjects);
+//            this.allGears.set(position, updatedGearWithAllObjects);
+//            this.recyclerView.getAdapter().notifyItemChanged(position);
 //            Utils.showToast(this, this.getResources().getString(R.string.gear_list_update_message), Toast.LENGTH_SHORT);
 //        }
 //        catch (NullPointerException e) {
@@ -110,13 +119,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void deleteItemGearList(GearWithAllObjects deletedGearWithAllObjects) {
-        //TODO : not implemented
-//        try {
-//            this.recyclerView.getAdapter().notifyItemInserted(this.allGears.size() -1);
-//            Utils.showToast(this, this.getResources().getString(R.string.gear_list_update_message), Toast.LENGTH_SHORT);
-//        }
-//        catch (NullPointerException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            int position = this.allGears.indexOf(deletedGearWithAllObjects);
+            this.allGears.remove(deletedGearWithAllObjects);
+            this.recyclerView.getAdapter().notifyItemRemoved(position);
+            Utils.showToast(this, this.getResources().getString(R.string.gear_list_update_message), Toast.LENGTH_SHORT);
+        }
+        catch (NullPointerException e) {
+            e.printStackTrace();
+        }
     }
 }
