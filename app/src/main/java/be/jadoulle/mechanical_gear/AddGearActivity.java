@@ -2,6 +2,7 @@ package be.jadoulle.mechanical_gear;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -57,10 +58,12 @@ public class AddGearActivity extends AppCompatActivity {
         findViewById(R.id.btn_validate).setOnClickListener(validate_listener);
     }
 
-    public void confirmGearCreation(boolean isCreate) {
-        if(isCreate) {
+    public void confirmGearCreation(int idNewGear) {
+        if(idNewGear > 0) {
             Utils.showToast(this, this.getResources().getString(R.string.gear_creation_message), Toast.LENGTH_SHORT);
-            setResult(RESULT_OK);
+            Intent backIntent = new Intent();
+            backIntent.putExtra("idNewGear", idNewGear);
+            setResult(RESULT_OK, backIntent);
             finish();
         }
         else {

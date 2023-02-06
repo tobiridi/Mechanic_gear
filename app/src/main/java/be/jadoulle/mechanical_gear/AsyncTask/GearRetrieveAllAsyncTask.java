@@ -8,31 +8,31 @@ import be.jadoulle.mechanical_gear.Database.GearDatabase;
 import be.jadoulle.mechanical_gear.Entities.DataClasses.GearWithAllObjects;
 import be.jadoulle.mechanical_gear.MainActivity;
 
-public class GearRetrieveAsyncTask extends AsyncTask<Integer, Void, GearWithAllObjects> {
+public class GearRetrieveAllAsyncTask extends AsyncTask<Void, Void, List<GearWithAllObjects>> {
     private MainActivity activity;
 
-    public GearRetrieveAsyncTask(MainActivity activity) {
+    public GearRetrieveAllAsyncTask(MainActivity activity) {
         this.activity = activity;
     }
 
     @Override
-    protected GearWithAllObjects doInBackground(Integer... integers) {
-        GearWithAllObjects gear = null;
+    protected List<GearWithAllObjects> doInBackground(Void... voids) {
+        List<GearWithAllObjects> allGears = null;
         try {
             GearDatabase database = GearDatabase.getInstance(this.activity.getApplicationContext());
-            gear = database.getGearDao().find(integers[0]);
-            System.out.println("gear recup : " + gear);
+            allGears = database.getGearDao().findAll();
         }
         catch (Exception e) {
             e.printStackTrace();
         }
 
-        return gear;
+        return allGears;
     }
 
     @Override
-    protected void onPostExecute(GearWithAllObjects gearWithAllObjects) {
-        super.onPostExecute(gearWithAllObjects);
-        this.activity.addItemGearList(gearWithAllObjects);
+    protected void onPostExecute(List<GearWithAllObjects> allGears) {
+        super.onPostExecute(allGears);
+        System.out.println("nbr gear in database : " + allGears.size());
+        this.activity.refreshAllGearList(allGears);
     }
 }

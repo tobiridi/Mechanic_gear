@@ -4,9 +4,14 @@ import android.widget.Toast;
 import android.content.Context;
 
 public final class Utils {
+    private static Toast globalToast = null;
 
     public static void showToast(Context context, CharSequence text, int duration) {
-        Toast.makeText(context, text, duration).show();
+        if(globalToast != null)
+            globalToast.cancel();
+
+        globalToast = Toast.makeText(context, text, duration);
+        globalToast.show();
     }
 
 }
