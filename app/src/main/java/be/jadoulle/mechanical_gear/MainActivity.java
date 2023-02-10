@@ -28,8 +28,8 @@ public class MainActivity extends AppCompatActivity {
     private View.OnClickListener add_gear_listener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(MainActivity.this, AddGearActivity.class);
             //TODO : optimise
+            Intent intent = new Intent(MainActivity.this, AddGearActivity.class);
             startActivityForResult(intent, ActivityCode.MAIN_ACTIVITY_CODE);
         }
     };
@@ -55,15 +55,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(data != null && requestCode == ActivityCode.MAIN_ACTIVITY_CODE && resultCode == RESULT_OK) {
-            //TODO : maybe change if add gear have all data at the creation,
-            // so don't call db because we have the gear
-            //get new gear item
-            int newIdGear = data.getIntExtra("idNewGear", 0);
+            GearWithAllObjects newGear = (GearWithAllObjects) data.getSerializableExtra("newGear");
             GearWithAllObjects deletedGear = (GearWithAllObjects) data.getSerializableExtra("deletedGear");
 
-            if(newIdGear > 0) {
-                //call async task, retrieve the gear
-                new GearRetrieveAsyncTask(this).execute(newIdGear);
+            if(newGear != null) {
+                //refresh Recycler View
+                this.addItemGearList(newGear);
             }
             else if (deletedGear != null) {
                 //refresh Recycler View
@@ -86,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
         }
         catch (NullPointerException e) {
             e.printStackTrace();
-            Utils.showToast(this, "list error", Toast.LENGTH_SHORT);
         }
     }
 

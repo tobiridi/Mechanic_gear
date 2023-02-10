@@ -37,11 +37,6 @@ public class DetailsGearActivity extends AppCompatActivity {
         public void onClick(View view) {
             //call async task, delete gear
             new GearDeleteAsyncTask(DetailsGearActivity.this).execute(selectedGear.getGear());
-
-            //TODO : move to add gear activity
-            //TODO : optimise with camera application
-//            Intent intentCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//            startActivityForResult(intentCamera, ActivityCode.DETAILS_GEAR_ACTIVITY_CODE);
         }
     };
 
@@ -74,6 +69,8 @@ public class DetailsGearActivity extends AppCompatActivity {
     private void addDataInLayout() {
         String[] fields = this.gearFields();
         String[] gearData = this.selectedGear.getGear().getAllDataToStringArray();
+//        String[] signalTypeData_1 = null;
+//        Bitmap[] signalTypeData_2 = null;
 
         /*
          * order of table row data
@@ -83,14 +80,13 @@ public class DetailsGearActivity extends AppCompatActivity {
          */
         // TODO : signalType (before gear.getNote())
 
+        //TODO : maybe change implementation
         for (int i = 0; i < fields.length; i++) {
             //gear's representations
             if(fields[i].equals(this.getResources().getString(R.string.gear_representation))) {
-                if(!this.selectedGear.getRepresentations().isEmpty()) {
-                    this.addPictureInTableRow(fields[i]);
-                }
+                this.addRepresentationsInTableRow();
             }
-            //gear info, fields and gear data not the same index
+            //gear info, fields and gear data don't have the same index
             else if(gearData[i-1] != null) {
                 this.addTableRow(fields[i], gearData[i-1]);
             }
@@ -98,26 +94,16 @@ public class DetailsGearActivity extends AppCompatActivity {
         }
     }
 
-    private void addPictureInTableRow(String field) {
-        TableRow row = null;
-        TextView textView = new TextView(this);
-
-        //configure textView
-        TableRow.LayoutParams params = new TableRow.LayoutParams();
-        params.setMargins(0,0,10,0);
-        textView.setLayoutParams(params);
-        textView.setTextAppearance(R.style.text_view);
-        textView.setText(field);
-
-        //add gear's representations
-        if(field.equals(this.getResources().getString(R.string.gear_representation))) {
-            row = findViewById(R.id.tr_gear_representations);
-            row.addView(textView, 0);
-            this.refreshRepresentations();
-        }
-        //add gear's signal Type
-        else {
-            //TODO : refresh signal Type
+    private void addRepresentationsInTableRow() {
+        if(!this.selectedGear.getRepresentations().isEmpty()) {
+            LinearLayout layout = findViewById(R.id.ll_gear_representations);
+            for(Representation rep : this.selectedGear.getRepresentations()) {
+                Bitmap bitmap = BitmapFactory.decodeByteArray(rep.getPicture(), 0, rep.getPicture().length);
+                ImageView img = new ImageView(this);
+                img.setImageBitmap(bitmap);
+                img.setPaddingRelative(10, 0, 0, 0);
+                layout.addView(img);
+            }
         }
     }
 
@@ -149,7 +135,7 @@ public class DetailsGearActivity extends AppCompatActivity {
 
     private String[] gearFields() {
         Resources resources = this.getResources();
-        //TODO : not finished, because empty implemententation for signalType
+        //TODO : not finished, because empty implementation for signalType
         return new String[] {
                 resources.getString(R.string.gear_representation),
                 resources.getString(R.string.gear_denomination),
@@ -165,62 +151,9 @@ public class DetailsGearActivity extends AppCompatActivity {
         };
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        //TODO : move all to add gear activity
-        if(data != null && requestCode == ActivityCode.DETAILS_GEAR_ACTIVITY_CODE && resultCode == RESULT_OK) {
-            Bundle bundle = data.getExtras();
-            //get picture
-            Bitmap picture = (Bitmap) bundle.get("data");
-            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-            picture.compress(Bitmap.CompressFormat.PNG, 80, outputStream);
-
-            //save representation
-            Representation newRepresentation = new Representation(0,outputStream.toByteArray(),this.selectedGear.getGear().getId());
-
-            //call async task
-            new RepresentationCreateAsyncTask(DetailsGearActivity.this).execute(newRepresentation);
-
-            //add picture
-            if (this.selectedGear.getRepresentations().isEmpty()) {
-                this.selectedGear.addRepresentation(newRepresentation);
-                this.addPictureInTableRow(this.getResources().getString(R.string.gear_representation));
-            }
-            else {
-                this.selectedGear.addRepresentation(newRepresentation);
-                this.refreshRepresentations();
-            }
-
-        }
-    }
-
-    private void refreshRepresentations() {
-        //TODO : move all to add gear activity
-        this.representationLayout.removeAllViews();
-        for (Representation rep : this.selectedGear.getRepresentations()) {
-            ImageView img = new ImageView(this);
-            img.setImageBitmap(BitmapFactory.decodeByteArray(rep.getPicture(),0, rep.getPicture().length));
-            img.setPaddingRelative(10,0,0,0);
-            this.representationLayout.addView(img);
-        }
-    }
-
-    public void confirmRepresentationCreation(boolean isCreated) {
-        //TODO : move all to add gear activity
-        if(isCreated) {
-            Utils.showToast(this, "représentation créer", Toast.LENGTH_LONG);
-        }
-        else {
-            Utils.showToast(this, "représentation non créer", Toast.LENGTH_LONG);
-        }
-    }
-
     public void confirmGearSuppression(boolean isDelete) {
         if (isDelete) {
             Utils.showToast(this, this.getResources().getString(R.string.gear_delete_message), Toast.LENGTH_SHORT);
-            //TODO : back and refresh list
             Intent backIntent = new Intent();
             backIntent.putExtra("deletedGear", this.selectedGear);
             setResult(RESULT_OK, backIntent);

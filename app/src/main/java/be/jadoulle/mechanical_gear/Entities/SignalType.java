@@ -18,6 +18,7 @@ public class SignalType implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String text;
+    //TODO : specify affinity type
     private byte[] picture;
     @ColumnInfo(name = "gear_id")
     private int gearId;

@@ -50,6 +50,30 @@
             </TableRow>
 
             <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp">
+
+                <TextView
+                    style="@style/text_view"
+                    android:layout_height="match_parent"
+                    android:text="@string/gear_representation" />
+
+                <HorizontalScrollView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:id="@+id/ll_gear_representations"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                    </LinearLayout>
+                </HorizontalScrollView>
+            </TableRow>
+
+            <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp">
@@ -84,25 +108,6 @@
                     android:autofillHints="name"
                     android:hint="@string/gear_gearCategory" />
             </TableRow>
-
-<!--            <TableRow-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginBottom="10dp">-->
-
-<!--                <TextView-->
-<!--                    style="@style/text_view"-->
-<!--                    android:layout_height="match_parent"-->
-<!--                    android:text="@string/gear_representation" />-->
-
-<!--                <Button-->
-<!--                    android:id="@+id/btn_gear_representation"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:contentDescription="@string/gear_representation"-->
-<!--                    android:drawableLeft="@drawable/add_a_photo"-->
-<!--                    android:text="@string/gear_representation" />-->
-<!--            </TableRow>-->
 
             <TableRow
                 android:layout_width="match_parent"

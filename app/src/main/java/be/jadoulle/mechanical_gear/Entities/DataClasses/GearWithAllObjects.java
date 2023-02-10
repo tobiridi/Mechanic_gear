@@ -4,6 +4,7 @@ import androidx.room.Embedded;
 import androidx.room.Relation;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -38,6 +39,13 @@ public class GearWithAllObjects implements Serializable {
     }
     public void setSignalTypes(List<SignalType> signalTypes) {
         this.signalTypes = signalTypes;
+    }
+
+    //CONSTRUCTOR
+    public GearWithAllObjects(Gear gear) {
+        this.gear = gear;
+        this.representations = new ArrayList<>();
+        this.signalTypes = new ArrayList<>();
     }
 
     //METHODS
