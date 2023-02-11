@@ -34,26 +34,34 @@
                 android:layout_height="wrap_content">
 
                 <Button
-                    android:id="@+id/btn_add_representation"
-                    style="@style/btn_option"
+                    android:id="@+id/btn_delete"
+                    style="@style/btn_cancel"
                     android:layout_height="wrap_content"
-                    android:text="@string/add_representation_text" />
+                    android:drawableLeft="@drawable/delete_gear"
+                    android:text="@string/delete_text" />
 
                 <Button
-                    android:id="@+id/btn_add_signalType"
+                    android:id="@+id/btn_modify"
                     style="@style/btn_option"
                     android:layout_height="wrap_content"
-                    android:text="@string/add_signal_type_text" />
+                    android:drawableLeft="@drawable/edit_gear"
+                    android:text="@string/modify_text" />
+
             </TableRow>
 
             <!-- gear's representations -->
             <TableRow
-                android:id="@+id/tr_gear_representations"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp">
+
+                <TextView
+                    style="@style/text_view"
+                    android:layout_height="match_parent"
+                    android:text="@string/gear_representation" />
 
                 <HorizontalScrollView
-                    android:layout_width="match_parent"
+                    android:layout_width="230dp"
                     android:layout_height="wrap_content">
 
                     <LinearLayout
@@ -64,7 +72,6 @@
 
                     </LinearLayout>
                 </HorizontalScrollView>
-
             </TableRow>
 
         </TableLayout>

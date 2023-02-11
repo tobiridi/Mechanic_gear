@@ -1,5 +1,6 @@
 package be.jadoulle.mechanical_gear.Entities;
 
+import static androidx.room.ColumnInfo.BLOB;
 import static androidx.room.ForeignKey.CASCADE;
 
 import androidx.room.ColumnInfo;
@@ -18,6 +19,7 @@ public class SignalType implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String text;
+    @ColumnInfo(typeAffinity = BLOB)
     private byte[] picture;
     @ColumnInfo(name = "gear_id")
     private int gearId;

@@ -6,9 +6,10 @@ import java.util.Arrays;
 
 import be.jadoulle.mechanical_gear.AddGearActivity;
 import be.jadoulle.mechanical_gear.Database.GearDatabase;
+import be.jadoulle.mechanical_gear.Entities.DataClasses.GearWithAllObjects;
 import be.jadoulle.mechanical_gear.Entities.Gear;
 
-public class GearCreateAsyncTask extends AsyncTask<String, Void, Integer> {
+public class GearCreateAsyncTask extends AsyncTask<String, Void, GearWithAllObjects> {
     private AddGearActivity activity;
 
     public GearCreateAsyncTask(AddGearActivity activity) {
@@ -16,7 +17,7 @@ public class GearCreateAsyncTask extends AsyncTask<String, Void, Integer> {
     }
 
     @Override
-    protected Integer doInBackground(String... strings) {
+    protected GearWithAllObjects doInBackground(String... strings) {
         try {
             //replace empty string to null
             for (int i = 0; i < strings.length; i++) {
@@ -39,15 +40,18 @@ public class GearCreateAsyncTask extends AsyncTask<String, Void, Integer> {
             if(strings[4] != null) {
                 nbrWire = Byte.parseByte(strings[4]);
                 if(nbrWire < 0) {
-                    return -1;
+                    return null;
                 }
             }
 
             GearDatabase database = GearDatabase.getInstance(this.activity.getApplicationContext());
             Gear newGear = new Gear(0, denomination, sensorType, basicWorking, role, nbrWire, tests, category, note, composition);
 
-            return (int) database.getGearDao().create(newGear);
+            int idNewGear = (int) database.getGearDao().create(newGear);
+            newGear.setId(idNewGear);
 
+            GearWithAllObjects newGearWithAllObjects = new GearWithAllObjects(newGear);
+            return newGearWithAllObjects;
         }
         catch (NumberFormatException e) {
             e.printStackTrace();
@@ -56,12 +60,12 @@ public class GearCreateAsyncTask extends AsyncTask<String, Void, Integer> {
             e.printStackTrace();
         }
 
-        return -1;
+        return null;
     }
 
     @Override
-    protected void onPostExecute(Integer integer) {
-        super.onPostExecute(integer);
-        this.activity.confirmGearCreation(integer);
+    protected void onPostExecute(GearWithAllObjects gearWithAllObjects) {
+        super.onPostExecute(gearWithAllObjects);
+        this.activity.saveOtherGearData(gearWithAllObjects);
     }
 }

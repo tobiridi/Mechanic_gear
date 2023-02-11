@@ -1,5 +1,6 @@
 package be.jadoulle.mechanical_gear.Views;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,7 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import be.jadoulle.mechanical_gear.DetailsGearActivity;
 import be.jadoulle.mechanical_gear.Entities.DataClasses.GearWithAllObjects;
+import be.jadoulle.mechanical_gear.MainActivity;
 import be.jadoulle.mechanical_gear.R;
+import be.jadoulle.mechanical_gear.Utils.ActivityCode;
 
 public class GearViewHolder extends RecyclerView.ViewHolder {
     private TextView gearDenomination;
@@ -26,9 +29,13 @@ public class GearViewHolder extends RecyclerView.ViewHolder {
         this.gearDenomination = itemView.findViewById(R.id.tv_recycler_item);
         this.gearRepresentation = itemView.findViewById(R.id.iv_recycler_item);
         itemView.setOnClickListener((View v) -> {
-            Intent intent = new Intent(v.getContext(), DetailsGearActivity.class);
-            intent.putExtra("selectedGear", this.selectedGear);
-            v.getContext().startActivity(intent);
+            Context context = v.getContext();
+            if (context instanceof MainActivity) {
+                Intent intent = new Intent(context, DetailsGearActivity.class);
+                intent.putExtra("selectedGear", this.selectedGear);
+                //TODO : optimise
+                ((MainActivity) context).startActivityForResult(intent, ActivityCode.MAIN_ACTIVITY_CODE);
+            }
         });
     }
 

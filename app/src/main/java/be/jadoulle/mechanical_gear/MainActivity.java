@@ -28,8 +28,8 @@ public class MainActivity extends AppCompatActivity {
     private View.OnClickListener add_gear_listener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(MainActivity.this, AddGearActivity.class);
             //TODO : optimise
+            Intent intent = new Intent(MainActivity.this, AddGearActivity.class);
             startActivityForResult(intent, ActivityCode.MAIN_ACTIVITY_CODE);
         }
     };
@@ -55,12 +55,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(data != null && requestCode == ActivityCode.MAIN_ACTIVITY_CODE && resultCode == RESULT_OK) {
-            //get new gear item
-            int newIdGear = data.getIntExtra("idNewGear", 0);
-            if(newIdGear > 0) {
-                System.out.println("id recup main activity : " + newIdGear);
-                //call async task, retrieve the gear
-                new GearRetrieveAsyncTask(this).execute(newIdGear);
+            GearWithAllObjects newGear = (GearWithAllObjects) data.getSerializableExtra("newGear");
+            GearWithAllObjects deletedGear = (GearWithAllObjects) data.getSerializableExtra("deletedGear");
+
+            if(newGear != null) {
+                //refresh Recycler View
+                this.addItemGearList(newGear);
+            }
+            else if (deletedGear != null) {
+                //refresh Recycler View
+                this.deleteItemGearList(deletedGear);
             }
         }
     }
@@ -79,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
         }
         catch (NullPointerException e) {
             e.printStackTrace();
-            Utils.showToast(this, "list error", Toast.LENGTH_SHORT);
         }
     }
 
@@ -101,7 +104,9 @@ public class MainActivity extends AppCompatActivity {
     public void updateItemGearList(GearWithAllObjects updatedGearWithAllObjects) {
         //TODO : not implemented
 //        try {
-//            this.recyclerView.getAdapter().notifyItemInserted(this.allGears.size() -1);
+//            int position = this.allGears.indexOf(updatedGearWithAllObjects);
+//            this.allGears.set(position, updatedGearWithAllObjects);
+//            this.recyclerView.getAdapter().notifyItemChanged(position);
 //            Utils.showToast(this, this.getResources().getString(R.string.gear_list_update_message), Toast.LENGTH_SHORT);
 //        }
 //        catch (NullPointerException e) {
@@ -110,13 +115,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void deleteItemGearList(GearWithAllObjects deletedGearWithAllObjects) {
-        //TODO : not implemented
-//        try {
-//            this.recyclerView.getAdapter().notifyItemInserted(this.allGears.size() -1);
-//            Utils.showToast(this, this.getResources().getString(R.string.gear_list_update_message), Toast.LENGTH_SHORT);
-//        }
-//        catch (NullPointerException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            int position = this.allGears.indexOf(deletedGearWithAllObjects);
+            this.allGears.remove(deletedGearWithAllObjects);
+            this.recyclerView.getAdapter().notifyItemRemoved(position);
+            Utils.showToast(this, this.getResources().getString(R.string.gear_list_update_message), Toast.LENGTH_SHORT);
+        }
+        catch (NullPointerException e) {
+            e.printStackTrace();
+        }
     }
 }

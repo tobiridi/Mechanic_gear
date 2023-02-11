@@ -21,7 +21,7 @@ public class GearRetrieveAsyncTask extends AsyncTask<Integer, Void, GearWithAllO
         try {
             GearDatabase database = GearDatabase.getInstance(this.activity.getApplicationContext());
             gear = database.getGearDao().find(integers[0]);
-            System.out.println("gear recup : " + gear);
+            System.out.println("gear retrieve : " + gear);
         }
         catch (Exception e) {
             e.printStackTrace();

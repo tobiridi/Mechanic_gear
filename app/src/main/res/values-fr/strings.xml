@@ -20,4 +20,7 @@
     <string name="add_representation_text">Ajouter une représentation</string>
     <string name="add_signal_type_text">Ajouter un type de signal</string>
     <string name="app_name" translatable="false">MECA-Composants</string>
+    <string name="delete_text">Supprimer</string>
+    <string name="modify_text">Modifier</string>
+    <string name="gear_delete_message">Pièce supprimer</string>
 </resources>
