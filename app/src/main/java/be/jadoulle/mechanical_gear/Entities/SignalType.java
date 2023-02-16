@@ -18,7 +18,7 @@ public class SignalType implements Serializable {
     //ATTRIBUTES
     @PrimaryKey(autoGenerate = true)
     private int id;
-    private String text;
+    private String name;
     @ColumnInfo(typeAffinity = BLOB)
     private byte[] picture;
     @ColumnInfo(name = "gear_id")
@@ -31,11 +31,11 @@ public class SignalType implements Serializable {
         this.id = id;
     }
 
-    public String getText() {
-        return text;
+    public String getName() {
+        return name;
     }
-    public void setText(String text) {
-        this.text = text;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public byte[] getPicture() {
@@ -53,9 +53,9 @@ public class SignalType implements Serializable {
     }
 
     //CONSTRUCTOR
-    public SignalType(int id, String text, byte[] picture, int gearId) {
+    public SignalType(int id, String name, byte[] picture, int gearId) {
         this.id = id;
-        this.text = text;
+        this.name = name;
         this.picture = picture;
         this.gearId = gearId;
     }
@@ -65,7 +65,7 @@ public class SignalType implements Serializable {
     public String toString() {
         return "SignalType{" +
                 "id=" + id +
-                ", text='" + text + '\'' +
+                ", name='" + name + '\'' +
                 ", gearId='" + gearId + '\'' +
                 '}';
     }

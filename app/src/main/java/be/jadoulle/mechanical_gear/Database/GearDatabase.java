@@ -15,7 +15,7 @@ import be.jadoulle.mechanical_gear.Entities.SignalType;
         SignalType.class,
         Representation.class
         },
-        version = 1, exportSchema = true)
+        version = 2, exportSchema = true)
 public abstract class GearDatabase extends RoomDatabase {
     private static GearDatabase INSTANCE;
 

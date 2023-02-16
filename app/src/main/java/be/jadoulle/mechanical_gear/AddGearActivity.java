@@ -40,9 +40,9 @@ public class AddGearActivity extends AppCompatActivity {
     private View.OnClickListener add_signal_type_listener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            //TODO : not implemented
-            // start new activity
-            Utils.showToast(AddGearActivity.this, "in Progress...", Toast.LENGTH_SHORT);
+            //TODO : optimise
+            Intent intent = new Intent(AddGearActivity.this, AddSignalTypeActivity.class);
+            startActivityForResult(intent, ActivityCode.ADD_GEAR_ACTIVITY_CODE);
         }
     };
 
@@ -99,8 +99,8 @@ public class AddGearActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (data != null && requestCode == ActivityCode.ADD_GEAR_ACTIVITY_CODE && resultCode == RESULT_OK) {
+            //get picture (gear representation)
             Bundle bundle = data.getExtras();
-            //get picture
             Bitmap picture = (Bitmap) bundle.get("data");
 
             if(picture != null) {
@@ -108,7 +108,20 @@ public class AddGearActivity extends AppCompatActivity {
                 this.representationPictures.add(picture);
                 this.refreshRepresentations();
             }
+
+            //get new signalType
             //TODO : save signal type
+            if(data.hasExtra("signalTypeName") && data.hasExtra("signalTypePicture")) {
+                Bitmap signalTypePicture = data.getParcelableExtra("signalTypePicture");
+                String signalTypeName = data.getStringExtra("signalTypeName");
+
+                //test display bitmap
+//                this.representationPictures.add(signalTypePicture);
+//                this.refreshRepresentations();
+                //TODO : i am here
+
+                System.out.println("info recu : " + signalTypeName + signalTypePicture);
+            }
         }
     }
 

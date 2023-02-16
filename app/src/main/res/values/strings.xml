@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Mechanical_gear</string>
+    <string name="app_name" translatable="false">MECA-Composants</string>
     <string name="app_description">An application description</string>
     <!-- text displayed -->
     <string name="cancel_text">Cancel</string>
@@ -11,6 +11,7 @@
     <string name="modify_text">Modify</string>
     <string name="details_gear_title">Gear details</string>
     <string name="add_gear_title">Add a new gear</string>
+    <string name="add_signal_type_title">Add a new signal type</string>
     <!-- message displayed -->
     <string name="gear_creation_message">Gear created</string>
     <string name="gear_creation_failed_message">Gear creation failed</string>
@@ -28,4 +29,7 @@
     <string name="gear_gearCategory">Sensor/Actuator</string>
     <string name="gear_note" translatable="false">Note</string>
     <string name="gear_composition" translatable="false">Composition</string>
+    <!-- string of "SignalType" JAVA object -->
+    <string name="signal_type_name">Signal name</string>
+    <string name="signal_type_picture">Signal picture</string>
 </resources>
