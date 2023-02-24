@@ -25,4 +25,5 @@
     <string name="add_signal_type_title">Ajouter un type de signal</string>
     <string name="signal_type_name">Nom du signal</string>
     <string name="signal_type_picture">Image du signal</string>
+    <string name="gear_nbrWire_invalid_message">Le nombre de fils doit être compris entre 0 et 127</string>
 </resources>

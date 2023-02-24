@@ -17,6 +17,7 @@
     <string name="gear_creation_failed_message">Gear creation failed</string>
     <string name="gear_list_update_message">Gear list updated</string>
     <string name="gear_delete_message">Gear deleted</string>
+    <string name="gear_nbrWire_invalid_message">Number of wires must be between 0 and 127</string>
     <!-- string of "Gear" JAVA object -->
     <string name="gear_denomination">Denomination</string>
     <string name="gear_representation">Representation</string>
