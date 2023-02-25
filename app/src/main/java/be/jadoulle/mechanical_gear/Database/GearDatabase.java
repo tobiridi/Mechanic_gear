@@ -29,7 +29,6 @@ public abstract class GearDatabase extends RoomDatabase {
         return INSTANCE;
     }
 
-
     //DAO class
     public abstract GearDAO getGearDao();
     public abstract SignalTypeDAO getSignalTypeDao();

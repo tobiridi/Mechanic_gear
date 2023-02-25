@@ -1,6 +1,5 @@
 package be.jadoulle.mechanical_gear;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -9,7 +8,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,13 +16,9 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.ByteArrayOutputStream;
-
-import be.jadoulle.mechanical_gear.AsyncTask.GearDeleteAsyncTask;
-import be.jadoulle.mechanical_gear.AsyncTask.RepresentationCreateAsyncTask;
+import be.jadoulle.mechanical_gear.AsyncTask.GearAsyncTask;
 import be.jadoulle.mechanical_gear.Entities.DataClasses.GearWithAllObjects;
 import be.jadoulle.mechanical_gear.Entities.Representation;
-import be.jadoulle.mechanical_gear.Utils.ActivityCode;
 import be.jadoulle.mechanical_gear.Utils.Utils;
 
 public class DetailsGearActivity extends AppCompatActivity {
@@ -36,7 +30,7 @@ public class DetailsGearActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             //call async task, delete gear
-            new GearDeleteAsyncTask(DetailsGearActivity.this).execute(selectedGear.getGear());
+            new GearAsyncTask(DetailsGearActivity.this).deleteGear(selectedGear.getGear());
         }
     };
 

@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -17,15 +16,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
-import be.jadoulle.mechanical_gear.AsyncTask.GearCreateAsyncTask;
-import be.jadoulle.mechanical_gear.AsyncTask.RepresentationCreateAsyncTask;
-import be.jadoulle.mechanical_gear.AsyncTask.SignalTypeCreateAsyncTask;
+import be.jadoulle.mechanical_gear.AsyncTask.GearAsyncTask;
 import be.jadoulle.mechanical_gear.Entities.DataClasses.GearWithAllObjects;
 import be.jadoulle.mechanical_gear.Entities.Gear;
-import be.jadoulle.mechanical_gear.Entities.Representation;
 import be.jadoulle.mechanical_gear.Utils.ActivityCode;
 import be.jadoulle.mechanical_gear.Utils.Utils;
 
@@ -42,6 +37,7 @@ public class AddGearActivity extends AppCompatActivity {
 
     //TODO : change implementation
     private ArrayList<Bitmap> representationPictures = new ArrayList<>();
+    private GearWithAllObjects newGearWithAllObjects = null;
     private ArrayList<Bitmap> signalTypePictures = new ArrayList<>();
     private ArrayList<String> signalTypeNames = new ArrayList<>();
 
@@ -76,17 +72,19 @@ public class AddGearActivity extends AppCompatActivity {
         public void onClick(View view) {
             if (isValidForm()) {
                 //call async task, create a new gear
-//                new GearCreateAsyncTask(AddGearActivity.this).execute(
-//                        et_denomination.getText().toString(),
-//                        et_sensorType.getText().toString(),
-//                        et_basicWorking.getText().toString(),
-//                        et_role.getText().toString(),
-//                        et_nbrWire.getText().toString(),
-//                        et_tests.getText().toString(),
-//                        et_category.getText().toString(),
-//                        et_composition.getText().toString(),
-//                        et_note.getText().toString()
-//                );
+                Gear gearSavedInDb = new GearAsyncTask(AddGearActivity.this).createGear(
+                        et_denomination.getText().toString(),
+                        et_sensorType.getText().toString(),
+                        et_basicWorking.getText().toString(),
+                        et_role.getText().toString(),
+                        et_nbrWire.getText().toString(),
+                        et_tests.getText().toString(),
+                        et_category.getText().toString(),
+                        et_note.getText().toString(),
+                        et_composition.getText().toString()
+                );
+                newGearWithAllObjects = new GearWithAllObjects(gearSavedInDb);
+
                 Utils.showToast(view.getContext(), "All data are fine", Toast.LENGTH_SHORT);
             }
             else {
@@ -124,10 +122,10 @@ public class AddGearActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (data != null && requestCode == ActivityCode.ADD_GEAR_ACTIVITY_CODE && resultCode == RESULT_OK) {
-            //get picture (gear representation)
             Bundle bundle = data.getExtras();
             Bitmap picture = (Bitmap) bundle.get("data");
 
+            //get new picture (gear representation)
             if(picture != null) {
                 //save representation
                 this.representationPictures.add(picture);
@@ -135,13 +133,13 @@ public class AddGearActivity extends AppCompatActivity {
             }
             //get new signalType
             else if(data.hasExtra("signalTypeName") && data.hasExtra("signalTypePicture")) {
-//                String signalTypeName = data.getStringExtra("signalTypeName");
-//                Bitmap signalTypePicture = data.getParcelableExtra("signalTypePicture");
+                String signalTypeName = data.getStringExtra("signalTypeName");
+                Bitmap signalTypePicture = data.getParcelableExtra("signalTypePicture");
 
                 //save signalType
-//                this.signalTypeNames.add(signalTypeName);
-//                this.signalTypePictures.add(signalTypePicture);
-//                this.refreshSignalTypes();
+                this.signalTypeNames.add(signalTypeName);
+                this.signalTypePictures.add(signalTypePicture);
+                this.refreshSignalTypes();
             }
         }
     }
@@ -168,7 +166,7 @@ public class AddGearActivity extends AppCompatActivity {
         Bitmap bitmap = this.signalTypePictures.get(this.signalTypePictures.size() - 1);
         Drawable bitmapDrawable = new BitmapDrawable(this.getResources(), bitmap);
 
-        textView.setPaddingRelative(5,5,5,5);
+        textView.setPaddingRelative(10,5,10,5);
         textView.setCompoundDrawablesWithIntrinsicBounds(null, bitmapDrawable,null,null);
         textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         textView.setText(this.signalTypeNames.get(this.signalTypeNames.size() - 1));
@@ -197,7 +195,6 @@ public class AddGearActivity extends AppCompatActivity {
     }
 
     /**
-     *
      * @return true if the AddGearActivity's form is Valid otherwise false
      */
     private boolean isValidForm() {

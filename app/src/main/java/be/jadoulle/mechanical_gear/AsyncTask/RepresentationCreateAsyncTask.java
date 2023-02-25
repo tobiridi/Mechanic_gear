@@ -12,6 +12,7 @@ import be.jadoulle.mechanical_gear.Entities.DataClasses.GearWithAllObjects;
 import be.jadoulle.mechanical_gear.Entities.Gear;
 import be.jadoulle.mechanical_gear.Entities.Representation;
 
+//TODO : change to Executor
 public class RepresentationCreateAsyncTask extends AsyncTask<Bitmap, Void, GearWithAllObjects> {
     private AddGearActivity activity;
     private GearWithAllObjects gearWithAllObjects;
@@ -52,6 +53,5 @@ public class RepresentationCreateAsyncTask extends AsyncTask<Bitmap, Void, GearW
     @Override
     protected void onPostExecute(GearWithAllObjects newGearWithAllObjects) {
         super.onPostExecute(newGearWithAllObjects);
-        this.activity.confirmGearCreation(newGearWithAllObjects);
     }
 }
