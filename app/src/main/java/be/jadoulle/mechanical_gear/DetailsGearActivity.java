@@ -55,6 +55,7 @@ public class DetailsGearActivity extends AppCompatActivity {
 
         //get selected gear from recycler view
         this.selectedGear = (GearWithAllObjects) this.getIntent().getSerializableExtra("selectedGear");
+        System.out.println("details of gear : " + this.selectedGear);
 
         //add data of a gear
         this.addDataInLayout();

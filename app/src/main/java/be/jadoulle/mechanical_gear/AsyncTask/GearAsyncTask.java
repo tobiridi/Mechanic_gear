@@ -9,6 +9,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import be.jadoulle.mechanical_gear.AddGearActivity;
 import be.jadoulle.mechanical_gear.Database.GearDatabase;
 import be.jadoulle.mechanical_gear.DetailsGearActivity;
 import be.jadoulle.mechanical_gear.Entities.DataClasses.GearWithAllObjects;
@@ -104,7 +105,12 @@ public class GearAsyncTask {
             //get data from callable
             newGear = future.get();
 
-            System.out.println("new Gear : " + newGear);
+            System.out.println("new gear : " + newGear);
+
+            //update AddGearActivity
+            if(activity instanceof AddGearActivity) {
+                ((AddGearActivity) activity).confirmGearCreation(newGear);
+            }
         }
         catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();

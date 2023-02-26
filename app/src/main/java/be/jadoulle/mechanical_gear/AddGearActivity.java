@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import be.jadoulle.mechanical_gear.AsyncTask.GearAsyncTask;
 import be.jadoulle.mechanical_gear.Entities.DataClasses.GearWithAllObjects;
 import be.jadoulle.mechanical_gear.Entities.Gear;
+import be.jadoulle.mechanical_gear.Entities.Representation;
+import be.jadoulle.mechanical_gear.Entities.SignalType;
 import be.jadoulle.mechanical_gear.Utils.ActivityCode;
 import be.jadoulle.mechanical_gear.Utils.Utils;
 
@@ -34,12 +36,9 @@ public class AddGearActivity extends AppCompatActivity {
     private EditText et_category;
     private EditText et_composition;
     private EditText et_note;
-
-    //TODO : change implementation
-    private ArrayList<Bitmap> representationPictures = new ArrayList<>();
-    private GearWithAllObjects newGearWithAllObjects = null;
-    private ArrayList<Bitmap> signalTypePictures = new ArrayList<>();
-    private ArrayList<String> signalTypeNames = new ArrayList<>();
+    private GearWithAllObjects newGearWithAllObjectsCreated = null;
+    private ArrayList<Representation> gearRepresentations = new ArrayList<>();
+    private ArrayList<SignalType> gearSignalTypes = new ArrayList<>();
 
     private View.OnClickListener add_representation_listener = new View.OnClickListener() {
         @Override
@@ -72,7 +71,7 @@ public class AddGearActivity extends AppCompatActivity {
         public void onClick(View view) {
             if (isValidForm()) {
                 //call async task, create a new gear
-                Gear gearSavedInDb = new GearAsyncTask(AddGearActivity.this).createGear(
+                new GearAsyncTask(AddGearActivity.this).createGear(
                         et_denomination.getText().toString(),
                         et_sensorType.getText().toString(),
                         et_basicWorking.getText().toString(),
@@ -83,9 +82,6 @@ public class AddGearActivity extends AppCompatActivity {
                         et_note.getText().toString(),
                         et_composition.getText().toString()
                 );
-                newGearWithAllObjects = new GearWithAllObjects(gearSavedInDb);
-
-                Utils.showToast(view.getContext(), "All data are fine", Toast.LENGTH_SHORT);
             }
             else {
                 Utils.showToast(view.getContext(), getResources().getString(R.string.gear_nbrWire_invalid_message), Toast.LENGTH_SHORT);
@@ -114,7 +110,6 @@ public class AddGearActivity extends AppCompatActivity {
         findViewById(R.id.btn_validate).setOnClickListener(validate_listener);
         findViewById(R.id.btn_add_representation).setOnClickListener(add_representation_listener);
         findViewById(R.id.btn_add_signalType).setOnClickListener(add_signal_type_listener);
-
     }
 
     @Override
@@ -128,7 +123,8 @@ public class AddGearActivity extends AppCompatActivity {
             //get new picture (gear representation)
             if(picture != null) {
                 //save representation
-                this.representationPictures.add(picture);
+                Representation newRep = new Representation(0, Utils.bitmapToByteArray(picture),0);
+                this.gearRepresentations.add(newRep);
                 this.refreshRepresentations();
             }
             //get new signalType
@@ -136,9 +132,12 @@ public class AddGearActivity extends AppCompatActivity {
                 String signalTypeName = data.getStringExtra("signalTypeName");
                 Bitmap signalTypePicture = data.getParcelableExtra("signalTypePicture");
 
+                if (signalTypeName.isEmpty())
+                    signalTypeName = null;
+
                 //save signalType
-                this.signalTypeNames.add(signalTypeName);
-                this.signalTypePictures.add(signalTypePicture);
+                SignalType newSignal = new SignalType(0, signalTypeName, Utils.bitmapToByteArray(signalTypePicture),0);
+                this.gearSignalTypes.add(newSignal);
                 this.refreshSignalTypes();
             }
         }
@@ -149,7 +148,8 @@ public class AddGearActivity extends AppCompatActivity {
      */
     private void refreshRepresentations() {
         LinearLayout layout = findViewById(R.id.ll_gear_representations);
-        Bitmap bitmap = this.representationPictures.get(this.representationPictures.size() - 1);
+        Representation lastRep = this.gearRepresentations.get(this.gearRepresentations.size() - 1);
+        Bitmap bitmap = Utils.byteArrayToBitmap(lastRep.getPicture());
         ImageView img = new ImageView(this);
         img.setImageBitmap(bitmap);
         img.setPaddingRelative(10, 0, 0, 0);
@@ -161,35 +161,28 @@ public class AddGearActivity extends AppCompatActivity {
      */
     private void refreshSignalTypes() {
         LinearLayout layout = findViewById(R.id.ll_gear_signal_types);
+        SignalType lastSignal = this.gearSignalTypes.get(this.gearSignalTypes.size() - 1);
         TextView textView = new TextView(this);
 
-        Bitmap bitmap = this.signalTypePictures.get(this.signalTypePictures.size() - 1);
+        Bitmap bitmap = Utils.byteArrayToBitmap(lastSignal.getPicture());
         Drawable bitmapDrawable = new BitmapDrawable(this.getResources(), bitmap);
 
         textView.setPaddingRelative(10,5,10,5);
         textView.setCompoundDrawablesWithIntrinsicBounds(null, bitmapDrawable,null,null);
         textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        textView.setText(this.signalTypeNames.get(this.signalTypeNames.size() - 1));
+        textView.setText(lastSignal.getName());
 
         layout.addView(textView);
     }
 
-    public void saveOtherGearData(GearWithAllObjects newGearWithAllObjects) {
-        //the last asyncTask, call confirmGearCreation() method
+    public void confirmGearCreation(Gear newGearCreated) {
+        this.newGearWithAllObjectsCreated = new GearWithAllObjects(newGearCreated);
+        this.newGearWithAllObjectsCreated.setRepresentations(this.gearRepresentations);
+        this.newGearWithAllObjectsCreated.setSignalTypes(this.gearSignalTypes);
 
-        //call async task, create representation
-//        new RepresentationCreateAsyncTask(this, newGearWithAllObjects).execute(
-//                this.representationPictures.toArray(new Bitmap[0]));
-
-        //call async task, create signalType
-//        new SignalTypeCreateAsyncTask(this, newGearWithAllObjects, this.signalTypePictures, this.signalTypeNames).execute();
-
-    }
-
-    public void confirmGearCreation(GearWithAllObjects newGearWithAllObjects) {
         Utils.showToast(this, this.getResources().getString(R.string.gear_creation_message), Toast.LENGTH_SHORT);
         Intent backIntent = new Intent();
-        backIntent.putExtra("newGear", newGearWithAllObjects);
+        backIntent.putExtra("newGear", this.newGearWithAllObjectsCreated);
         setResult(RESULT_OK, backIntent);
         finish();
     }

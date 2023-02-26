@@ -14,7 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import be.jadoulle.mechanical_gear.AsyncTask.GearAsyncTask;
+import be.jadoulle.mechanical_gear.AsyncTask.RepresentationAsyncTask;
+import be.jadoulle.mechanical_gear.AsyncTask.SignalTypeAsyncTask;
 import be.jadoulle.mechanical_gear.Entities.DataClasses.GearWithAllObjects;
+import be.jadoulle.mechanical_gear.Entities.Representation;
 import be.jadoulle.mechanical_gear.Utils.ActivityCode;
 import be.jadoulle.mechanical_gear.Utils.Utils;
 import be.jadoulle.mechanical_gear.Views.GearAdapter;
@@ -57,6 +60,11 @@ public class MainActivity extends AppCompatActivity {
             GearWithAllObjects deletedGear = (GearWithAllObjects) data.getSerializableExtra("deletedGear");
 
             if(newGear != null) {
+                //call async task, create representations
+                new RepresentationAsyncTask(this, newGear.getRepresentations()).createRepresentations(newGear.getGear());
+                //call async task, create signalTypes
+                new SignalTypeAsyncTask(this,newGear.getSignalTypes()).createSignalTypes(newGear.getGear());
+
                 //refresh Recycler View
                 this.addItemGearList(newGear);
             }
@@ -90,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void addItemGearList(GearWithAllObjects newGearWithAllObjects) {
         try {
+            //TODO : add a progress bar and then display data
             this.allGears.add(newGearWithAllObjects);
             this.recyclerView.getAdapter().notifyItemInserted(this.allGears.size() -1);
             Utils.showToast(this, this.getResources().getString(R.string.gear_list_update_message), Toast.LENGTH_SHORT);
@@ -122,5 +131,9 @@ public class MainActivity extends AppCompatActivity {
         catch (NullPointerException e) {
             e.printStackTrace();
         }
+    }
+
+    public void updateProgressBar(int step) {
+
     }
 }

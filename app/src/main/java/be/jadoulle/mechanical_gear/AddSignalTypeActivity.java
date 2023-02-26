@@ -17,10 +17,8 @@ import be.jadoulle.mechanical_gear.Utils.ActivityCode;
 import be.jadoulle.mechanical_gear.Utils.Utils;
 
 public class AddSignalTypeActivity extends AppCompatActivity {
-    private ImageView ivPicture;
     private EditText etName;
     private Bitmap currentBitmap;
-
 
     private View.OnClickListener add_picture_listener = new View.OnClickListener() {
         @Override
@@ -55,10 +53,9 @@ public class AddSignalTypeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_signal_type);
 
-        this.ivPicture = findViewById(R.id.iv_signal_type_picture);
         this.etName = findViewById(R.id.et_signal_type_name);
 
-        this.ivPicture.setOnClickListener(add_picture_listener);
+        findViewById(R.id.iv_signal_type_picture).setOnClickListener(add_picture_listener);
         findViewById(R.id.btn_cancel).setOnClickListener(cancel_listener);
         findViewById(R.id.btn_validate).setOnClickListener(validate_listener);
     }
@@ -72,7 +69,8 @@ public class AddSignalTypeActivity extends AppCompatActivity {
             Bitmap picture = (Bitmap) bundle.get("data");
 
             if(picture != null) {
-                this.ivPicture.setImageBitmap(picture);
+                ImageView img = findViewById(R.id.iv_signal_type_picture);
+                img.setImageBitmap(picture);
                 this.currentBitmap = picture;
             }
         }
