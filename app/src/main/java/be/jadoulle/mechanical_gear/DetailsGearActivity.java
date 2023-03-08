@@ -7,8 +7,11 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
@@ -16,15 +19,19 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Arrays;
+
 import be.jadoulle.mechanical_gear.AsyncTask.GearAsyncTask;
 import be.jadoulle.mechanical_gear.Entities.DataClasses.GearWithAllObjects;
+import be.jadoulle.mechanical_gear.Entities.Gear;
 import be.jadoulle.mechanical_gear.Entities.Representation;
+import be.jadoulle.mechanical_gear.Entities.SignalType;
 import be.jadoulle.mechanical_gear.Utils.Utils;
 
 public class DetailsGearActivity extends AppCompatActivity {
     private GearWithAllObjects selectedGear;
     private TableLayout tableLayout;
-    private LinearLayout representationLayout;
+    private int signalTypeViewIndex;
 
     private View.OnClickListener delete_gear_listener = new View.OnClickListener() {
         @Override
@@ -48,57 +55,60 @@ public class DetailsGearActivity extends AppCompatActivity {
         setContentView(R.layout.activity_details_gear);
 
         this.tableLayout = findViewById(R.id.tl_details_gear);
-        this.representationLayout = findViewById(R.id.ll_gear_representations);
 
         findViewById(R.id.btn_delete).setOnClickListener(delete_gear_listener);
         findViewById(R.id.btn_modify).setOnClickListener(modify_gear_listener);
 
         //get selected gear from recycler view
         this.selectedGear = (GearWithAllObjects) this.getIntent().getSerializableExtra("selectedGear");
-        System.out.println("details of gear : " + this.selectedGear);
 
-        //add data of a gear
-        this.addDataInLayout();
+        this.addDataInTableLayout();
     }
 
-    private void addDataInLayout() {
-        String[] fields = this.gearFields();
-        String[] gearData = this.selectedGear.getGear().getAllDataToStringArray();
-//        String[] signalTypeData_1 = null;
-//        Bitmap[] signalTypeData_2 = null;
+    private void addDataInTableLayout() {
+        String[][] fields = this.gearFields();
+        String signalTypeRes = this.getResources().getString(R.string.gear_signalType);
 
-        /*
-         * order of table row data
-         * gear's representations
-         * gear info
-         * gear's signalType
-         */
-        // TODO : signalType (before gear.getNote())
-
-        //TODO : maybe change implementation
         for (int i = 0; i < fields.length; i++) {
-            //gear's representations
-            if(fields[i].equals(this.getResources().getString(R.string.gear_representation))) {
-                this.addRepresentationsInTableRow();
+            if(fields[i][0].equals(signalTypeRes)) {
+                this.signalTypeViewIndex = this.tableLayout.getChildCount() - 1;
             }
-            //gear info, fields and gear data don't have the same index
-            else if(gearData[i-1] != null) {
-                this.addTableRow(fields[i], gearData[i-1]);
+            else if (fields[i][1] != null) {
+                //add row if data
+                this.addTableRow(fields[i][0], fields[i][1]);
             }
-            //TODO : gear's signal Type
+        }
+
+        this.moveSignalTypeView();
+        this.addRepresentations();
+        this.addSignalTypes();
+    }
+
+    private void addRepresentations() {
+        LinearLayout layout = findViewById(R.id.ll_gear_representations);
+        for (Representation rep : this.selectedGear.getRepresentations()) {
+            Bitmap bitmap = Utils.byteArrayToBitmap(rep.getPicture());
+            ImageView img = new ImageView(this);
+            img.setImageBitmap(bitmap);
+            img.setPaddingRelative(10, 0, 0, 0);
+            layout.addView(img);
         }
     }
 
-    private void addRepresentationsInTableRow() {
-        if(!this.selectedGear.getRepresentations().isEmpty()) {
-            LinearLayout layout = findViewById(R.id.ll_gear_representations);
-            for(Representation rep : this.selectedGear.getRepresentations()) {
-                Bitmap bitmap = BitmapFactory.decodeByteArray(rep.getPicture(), 0, rep.getPicture().length);
-                ImageView img = new ImageView(this);
-                img.setImageBitmap(bitmap);
-                img.setPaddingRelative(10, 0, 0, 0);
-                layout.addView(img);
-            }
+    private void addSignalTypes() {
+        LinearLayout layout = findViewById(R.id.ll_gear_signal_types);
+        for (SignalType signalType : this.selectedGear.getSignalTypes()) {
+            TextView textViewData = new TextView(this);
+
+            Bitmap bitmap = Utils.byteArrayToBitmap(signalType.getPicture());
+            Drawable bitmapDrawable = new BitmapDrawable(this.getResources(), bitmap);
+
+            textViewData.setPaddingRelative(10, 5, 10, 5);
+            textViewData.setCompoundDrawablesWithIntrinsicBounds(null, bitmapDrawable, null, null);
+            textViewData.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            textViewData.setText(signalType.getName());
+
+            layout.addView(textViewData);
         }
     }
 
@@ -125,24 +135,33 @@ public class DetailsGearActivity extends AppCompatActivity {
 
         row.addView(textView);
         row.addView(textViewData);
-        this.tableLayout.addView(row);
+        this.tableLayout.addView(row, this.tableLayout.getChildCount() -1);
     }
 
-    private String[] gearFields() {
+    private void moveSignalTypeView() {
+        int nbrChild = this.tableLayout.getChildCount();
+        View signalTypeView = this.tableLayout.getChildAt(nbrChild -1);
+
+        //move signal type field after "gear tests" field
+        this.tableLayout.removeViewAt(nbrChild - 1);
+        this.tableLayout.addView(signalTypeView, this.signalTypeViewIndex);
+    }
+
+    private String[][] gearFields() {
         Resources resources = this.getResources();
-        //TODO : not finished, because empty implementation for signalType
-        return new String[] {
-                resources.getString(R.string.gear_representation),
-                resources.getString(R.string.gear_denomination),
-                resources.getString(R.string.gear_gearCategory),
-                resources.getString(R.string.gear_gearSensorType),
-                resources.getString(R.string.gear_basicWorking),
-                resources.getString(R.string.gear_role),
-                resources.getString(R.string.gear_nbrWire),
-                resources.getString(R.string.gear_tests),
-                resources.getString(R.string.gear_composition),
-//                resources.getString(R.string.gear_signalType),
-                resources.getString(R.string.gear_note),
+        String[] gearData = this.selectedGear.getGear().getAllDataToStringArray();
+        return new String[][] {
+                {resources.getString(R.string.gear_representation), null},
+                {resources.getString(R.string.gear_denomination), gearData[0]},
+                {resources.getString(R.string.gear_gearCategory), gearData[1]},
+                {resources.getString(R.string.gear_gearSensorType), gearData[2]},
+                {resources.getString(R.string.gear_basicWorking), gearData[3]},
+                {resources.getString(R.string.gear_role), gearData[4]},
+                {resources.getString(R.string.gear_nbrWire), gearData[5]},
+                {resources.getString(R.string.gear_tests), gearData[6]},
+                {resources.getString(R.string.gear_signalType), null},
+                {resources.getString(R.string.gear_composition), gearData[7]},
+                {resources.getString(R.string.gear_note), gearData[8]},
         };
     }
 

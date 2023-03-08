@@ -61,7 +61,7 @@
                     android:text="@string/gear_representation" />
 
                 <HorizontalScrollView
-                    android:layout_width="wrap_content"
+                    android:layout_width="230dp"
                     android:layout_height="wrap_content">
 
                     <LinearLayout
@@ -213,7 +213,7 @@
                     android:text="@string/gear_signalType" />
 
                 <HorizontalScrollView
-                    android:layout_width="wrap_content"
+                    android:layout_width="230dp"
                     android:layout_height="wrap_content">
 
                         <LinearLayout
