@@ -19,8 +19,11 @@
     <string name="back_text">Retour</string>
     <string name="add_representation_text">Ajouter une représentation</string>
     <string name="add_signal_type_text">Ajouter un type de signal</string>
-    <string name="app_name" translatable="false">MECA-Composants</string>
     <string name="delete_text">Supprimer</string>
     <string name="modify_text">Modifier</string>
     <string name="gear_delete_message">Pièce supprimer</string>
+    <string name="add_signal_type_title">Ajouter un type de signal</string>
+    <string name="signal_type_name">Nom du signal</string>
+    <string name="signal_type_picture">Image du signal</string>
+    <string name="gear_nbrWire_invalid_message">Le nombre de fils doit être compris entre 0 et 127</string>
 </resources>

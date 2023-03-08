@@ -49,6 +49,7 @@
                     android:text="@string/add_signal_type_text" />
             </TableRow>
 
+            <!-- representation -->
             <TableRow
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -60,7 +61,7 @@
                     android:text="@string/gear_representation" />
 
                 <HorizontalScrollView
-                    android:layout_width="wrap_content"
+                    android:layout_width="230dp"
                     android:layout_height="wrap_content">
 
                     <LinearLayout
@@ -200,38 +201,31 @@
                     android:hint="@string/gear_tests" />
             </TableRow>
 
-<!--            <TableRow-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginBottom="10dp">-->
+            <!-- signal type -->
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp">
 
-<!--                <TextView-->
-<!--                    style="@style/text_view"-->
-<!--                    android:layout_height="match_parent"-->
-<!--                    android:layout_gravity="center_vertical"-->
-<!--                    android:text="@string/gear_signalType" />-->
+                <TextView
+                    style="@style/text_view"
+                    android:layout_height="match_parent"
+                    android:text="@string/gear_signalType" />
 
-<!--                <LinearLayout-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:orientation="vertical">-->
+                <HorizontalScrollView
+                    android:layout_width="230dp"
+                    android:layout_height="wrap_content">
 
-<!--                    <EditText-->
-<!--                        android:id="@+id/et_gear_signalType"-->
-<!--                        style="@style/edit_text"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:autofillHints="name"-->
-<!--                        android:hint="@string/gear_signalType" />-->
+                        <LinearLayout
+                            android:id="@+id/ll_gear_signal_types"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
 
-<!--                    <Button-->
-<!--                        android:id="@+id/btn_gear_signalType"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:contentDescription="@string/gear_signalType"-->
-<!--                        android:drawableLeft="@drawable/add_a_photo"-->
-<!--                        android:text="@string/gear_signalType" />-->
-<!--                </LinearLayout>-->
-<!--            </TableRow>-->
+                        </LinearLayout>
+
+                </HorizontalScrollView>
+            </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
