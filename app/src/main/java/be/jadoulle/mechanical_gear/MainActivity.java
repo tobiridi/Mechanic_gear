@@ -21,10 +21,12 @@ import be.jadoulle.mechanical_gear.Entities.Representation;
 import be.jadoulle.mechanical_gear.Utils.ActivityCode;
 import be.jadoulle.mechanical_gear.Utils.Utils;
 import be.jadoulle.mechanical_gear.Views.GearAdapter;
+import be.jadoulle.mechanical_gear.Views.GearViewHolder;
 
 public class MainActivity extends AppCompatActivity {
     private List<GearWithAllObjects> allGears;
     private RecyclerView recyclerView;
+    private Thread progressBarThread;
 
     private View.OnClickListener add_gear_listener = new View.OnClickListener() {
         @Override
@@ -55,20 +57,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(data != null && requestCode == ActivityCode.MAIN_ACTIVITY_CODE && resultCode == RESULT_OK) {
+        if (data != null && requestCode == ActivityCode.MAIN_ACTIVITY_CODE && resultCode == RESULT_OK) {
             GearWithAllObjects newGear = (GearWithAllObjects) data.getSerializableExtra("newGear");
             GearWithAllObjects deletedGear = (GearWithAllObjects) data.getSerializableExtra("deletedGear");
 
-            if(newGear != null) {
-                //call async task, create representations
-                new RepresentationAsyncTask(this, newGear.getRepresentations()).createRepresentations(newGear.getGear());
-                //call async task, create signalTypes
-                new SignalTypeAsyncTask(this,newGear.getSignalTypes()).createSignalTypes(newGear.getGear());
-
+            if (newGear != null) {
                 //refresh Recycler View
                 this.addItemGearList(newGear);
-            }
-            else if (deletedGear != null) {
+            } else if (deletedGear != null) {
                 //refresh Recycler View
                 this.deleteItemGearList(deletedGear);
             }
@@ -98,10 +94,13 @@ public class MainActivity extends AppCompatActivity {
      */
     public void addItemGearList(GearWithAllObjects newGearWithAllObjects) {
         try {
-            //TODO : add a progress bar and then display data
             this.allGears.add(newGearWithAllObjects);
-            this.recyclerView.getAdapter().notifyItemInserted(this.allGears.size() -1);
-            Utils.showToast(this, this.getResources().getString(R.string.gear_list_update_message), Toast.LENGTH_SHORT);
+            this.recyclerView.getAdapter().notifyItemInserted(this.allGears.size() - 1);
+
+            //wait view holder creation then save representation and signalType in DB + update progress bar
+            //the view holder is created from "main" thread
+            this.progressBarThread = new Thread(this::waitViewHolderCreation, "progressBarThread");
+            this.progressBarThread.start();
         }
         catch (NullPointerException e) {
             e.printStackTrace();
@@ -133,7 +132,34 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void updateProgressBar(int step) {
+    private synchronized void waitViewHolderCreation() {
+        GearWithAllObjects newGearWithAllObjects = this.allGears.get(this.allGears.size() - 1);
 
+        try {
+            while (this.recyclerView.getChildCount() < this.allGears.size()) {
+                wait(50L);
+            }
+
+            //call async task, create representation
+            new RepresentationAsyncTask(this, newGearWithAllObjects.getRepresentations())
+                    .createRepresentations(newGearWithAllObjects.getGear());
+
+            //call async task, create signalType
+            new SignalTypeAsyncTask(this, newGearWithAllObjects.getSignalTypes())
+                    .createSignalTypes(newGearWithAllObjects.getGear());
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
+
+    public void updateProgressBarOnView() {
+        //main thread update progress bar for the new item in recycler view
+        this.runOnUiThread(() -> {
+            int index = this.recyclerView.getChildCount() - 1;
+            GearViewHolder gearViewHolder = (GearViewHolder) this.recyclerView.getChildViewHolder(this.recyclerView.getChildAt(index));
+            gearViewHolder.updateProgressBar();
+        });
+    }
+
 }

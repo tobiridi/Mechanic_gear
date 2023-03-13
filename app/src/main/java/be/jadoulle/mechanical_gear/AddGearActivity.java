@@ -115,7 +115,6 @@ public class AddGearActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (data != null && requestCode == ActivityCode.ADD_GEAR_ACTIVITY_CODE && resultCode == RESULT_OK) {
             Bundle bundle = data.getExtras();
             Bitmap picture = (Bitmap) bundle.get("data");

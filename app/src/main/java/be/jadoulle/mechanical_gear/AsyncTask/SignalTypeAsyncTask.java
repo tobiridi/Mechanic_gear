@@ -71,7 +71,7 @@ public class SignalTypeAsyncTask {
 
                     //update MainActivity
                     if(activity instanceof MainActivity) {
-                        //TODO : update progress bar
+                        ((MainActivity) activity).updateProgressBarOnView();
                     }
                 }
                 catch (ExecutionException | InterruptedException e) {
