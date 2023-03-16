@@ -18,6 +18,13 @@
         android:theme="@style/Theme.Mechanical_gear"
         tools:targetApi="31">
         <activity
+            android:name=".ModifyGearActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".AddSignalTypeActivity"
             android:exported="false">
             <meta-data

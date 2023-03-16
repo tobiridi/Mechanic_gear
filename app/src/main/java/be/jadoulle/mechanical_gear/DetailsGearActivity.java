@@ -26,6 +26,7 @@ import be.jadoulle.mechanical_gear.Entities.DataClasses.GearWithAllObjects;
 import be.jadoulle.mechanical_gear.Entities.Gear;
 import be.jadoulle.mechanical_gear.Entities.Representation;
 import be.jadoulle.mechanical_gear.Entities.SignalType;
+import be.jadoulle.mechanical_gear.Utils.ActivityCode;
 import be.jadoulle.mechanical_gear.Utils.Utils;
 
 public class DetailsGearActivity extends AppCompatActivity {
@@ -44,8 +45,10 @@ public class DetailsGearActivity extends AppCompatActivity {
     private View.OnClickListener modify_gear_listener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            //TODO : not implemented
-            Utils.showToast(DetailsGearActivity.this, "in Progress...", Toast.LENGTH_SHORT);
+            //TODO : optimise
+            Intent intent = new Intent(DetailsGearActivity.this, ModifyGearActivity.class);
+            intent.putExtra("modifyGear", selectedGear);
+            startActivityForResult(intent, ActivityCode.DETAILS_GEAR_ACTIVITY_CODE);
         }
     };
 
