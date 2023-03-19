@@ -109,8 +109,6 @@ public class GearAsyncTask {
             //get data from callable
             newGear = future.get();
 
-            System.out.println("new gear : " + newGear);
-
             //update AddGearActivity
             if(activity instanceof AddGearActivity) {
                 ((AddGearActivity) activity).confirmGearCreation(newGear);
@@ -221,7 +219,6 @@ public class GearAsyncTask {
 
             //update ModifyGearActivity
             if(activity instanceof ModifyGearActivity) {
-                System.out.println("nbr updated item : " + updatedItem);
                 boolean isUpdate = updatedItem >= 1;
                 ((ModifyGearActivity) activity).confirmGearUpdating(isUpdate);
             }

@@ -67,8 +67,6 @@ public class SignalTypeAsyncTask {
                     //get data from callable
                     newSignal = future.get();
 
-                    System.out.println("new signalType saved : " + newSignal);
-
                     //update MainActivity
                     if(activity instanceof MainActivity) {
                         ((MainActivity) activity).updateProgressBarOnView();

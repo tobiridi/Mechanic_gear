@@ -9,12 +9,9 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import be.jadoulle.mechanical_gear.Utils.ActivityCode;
-import be.jadoulle.mechanical_gear.Utils.Utils;
 
 public class AddSignalTypeActivity extends AppCompatActivity {
     private EditText etName;

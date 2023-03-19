@@ -9,7 +9,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-import be.jadoulle.mechanical_gear.AddGearActivity;
 import be.jadoulle.mechanical_gear.Database.GearDatabase;
 import be.jadoulle.mechanical_gear.Entities.Gear;
 import be.jadoulle.mechanical_gear.Entities.Representation;
@@ -42,7 +41,6 @@ public class RepresentationAsyncTask {
         this.executorService = Executors.newSingleThreadExecutor();
     }
 
-    //TODO : add name for representation
     /**
      * @see RepresentationAsyncTask#RepresentationAsyncTask(AppCompatActivity, List)
      * @return New {@link Representation} saved
@@ -72,8 +70,6 @@ public class RepresentationAsyncTask {
                     Future<Representation> future = this.executorService.submit(callable);
                     //get data from callable
                     newRepresentation = future.get();
-
-                    System.out.println("new representation saved : " + newRepresentation);
 
                     //update MainActivity
                     if(activity instanceof MainActivity) {

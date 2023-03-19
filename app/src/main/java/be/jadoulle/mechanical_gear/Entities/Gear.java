@@ -7,25 +7,6 @@ import androidx.room.PrimaryKey;
 import java.io.Serializable;
 import java.util.Objects;
 
-/*
-    sensor = capteur
-    actuator = actionneur
- */
-
-/*
-    denomination;       titre/nom (saisie utilisateur)
-    representation;     plusieurs images de l'objet (saisie utilisateur)
-    gearSensorType;     le type de l'objet (saisie utilisateur)
-    basicWorking;       le texte qui decrit sont fonctionnement de base (saisie utilisateur)
-    role;               à quoi il sert (saisie utilisateur)
-    nbrWire;            nombre de fils (saisie utilisateur)
-    tests;              comment on le test, avec quelle outils (saisie utilisateur)
-    signalType;         le type de signal (saisie utilisateur + plusieurs photo en plus)
-    gearCategory;       actionneur ou capteur (choix utilisateur)
-    note;               note de l'utilisateur (saisie utilisateur)
-    composition;        la matière de l'objet (saisie utilisateur)
- */
-
 @Entity(tableName = "gear")
 public class Gear implements Serializable {
     //ATTRIBUTES

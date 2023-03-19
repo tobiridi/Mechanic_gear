@@ -17,7 +17,6 @@ import be.jadoulle.mechanical_gear.AsyncTask.GearAsyncTask;
 import be.jadoulle.mechanical_gear.AsyncTask.RepresentationAsyncTask;
 import be.jadoulle.mechanical_gear.AsyncTask.SignalTypeAsyncTask;
 import be.jadoulle.mechanical_gear.Entities.DataClasses.GearWithAllObjects;
-import be.jadoulle.mechanical_gear.Entities.Representation;
 import be.jadoulle.mechanical_gear.Utils.ActivityCode;
 import be.jadoulle.mechanical_gear.Utils.Utils;
 import be.jadoulle.mechanical_gear.Views.GearAdapter;
