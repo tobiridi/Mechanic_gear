@@ -8,13 +8,17 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.stream.Collectors;
 
 import be.jadoulle.mechanical_gear.AddGearActivity;
 import be.jadoulle.mechanical_gear.Database.GearDatabase;
 import be.jadoulle.mechanical_gear.DetailsGearActivity;
 import be.jadoulle.mechanical_gear.Entities.DataClasses.GearWithAllObjects;
 import be.jadoulle.mechanical_gear.Entities.Gear;
+import be.jadoulle.mechanical_gear.Entities.Representation;
+import be.jadoulle.mechanical_gear.Entities.SignalType;
 import be.jadoulle.mechanical_gear.MainActivity;
+import be.jadoulle.mechanical_gear.ModifyGearActivity;
 
 public class GearAsyncTask {
     private ExecutorService executorService;
@@ -178,5 +182,57 @@ public class GearAsyncTask {
         this.executorService.shutdown();
 
         return gearFind;
+    }
+
+    public int updateGear(final GearWithAllObjects gearWithAllObjects) {
+        int updatedItem = 0;
+
+        //task
+        Callable<Integer> callable = () -> {
+            int nbrUpdating = 0;
+
+            GearDatabase database = GearDatabase.getInstance(activity.getApplicationContext());
+            nbrUpdating += database.getGearDao().update(gearWithAllObjects.getGear());
+
+            //TODO : add modification of existing representations and signalTypes
+            List<Representation> representationsAdded = gearWithAllObjects.getRepresentations().stream().filter(rep -> rep.getId() == 0).collect(Collectors.toList());
+            List<SignalType> signalTypesAdded = gearWithAllObjects.getSignalTypes().stream().filter(s -> s.getId() == 0).collect(Collectors.toList());
+
+            for (Representation rep : representationsAdded) {
+                int idRep = (int) database.getRepresentationDao().create(rep);
+                rep.setId(idRep);
+                nbrUpdating++;
+            }
+
+            for (SignalType signalType : signalTypesAdded) {
+                int idSignalType = (int) database.getSignalTypeDao().create(signalType);
+                signalType.setId(idSignalType);
+                nbrUpdating++;
+            }
+
+            return nbrUpdating;
+        };
+
+        try {
+            //execute task
+            Future<Integer> future = this.executorService.submit(callable);
+            //get data from callable
+            updatedItem = future.get();
+
+            //update ModifyGearActivity
+            if(activity instanceof ModifyGearActivity) {
+                System.out.println("nbr updated item : " + updatedItem);
+                boolean isUpdate = updatedItem >= 1;
+                ((ModifyGearActivity) activity).confirmGearUpdating(isUpdate);
+            }
+        }
+        catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        //close the ended previous task
+        this.executorService.shutdown();
+
+        return updatedItem;
     }
 }

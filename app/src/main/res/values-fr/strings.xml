@@ -26,4 +26,6 @@
     <string name="signal_type_name">Nom du signal</string>
     <string name="signal_type_picture">Image du signal</string>
     <string name="gear_nbrWire_invalid_message">Le nombre de fils doit être compris entre 0 et 127</string>
+    <string name="modify_gear_title">Modifier une pièce</string>
+    <string name="gear_update_message">Pièce mise à jour</string>
 </resources>
