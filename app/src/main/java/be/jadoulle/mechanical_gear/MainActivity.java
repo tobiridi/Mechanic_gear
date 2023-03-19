@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         if (data != null && requestCode == ActivityCode.MAIN_ACTIVITY_CODE && resultCode == RESULT_OK) {
             GearWithAllObjects newGear = (GearWithAllObjects) data.getSerializableExtra("newGear");
             GearWithAllObjects deletedGear = (GearWithAllObjects) data.getSerializableExtra("deletedGear");
+            GearWithAllObjects updatedGear = (GearWithAllObjects) data.getSerializableExtra("updatedGear");
 
             if (newGear != null) {
                 //refresh Recycler View
@@ -67,6 +68,9 @@ public class MainActivity extends AppCompatActivity {
             } else if (deletedGear != null) {
                 //refresh Recycler View
                 this.deleteItemGearList(deletedGear);
+            } else if(updatedGear != null) {
+                //refresh Recycler View
+                this.updateItemGearList(updatedGear);
             }
         }
     }
@@ -108,16 +112,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void updateItemGearList(GearWithAllObjects updatedGearWithAllObjects) {
-        //TODO : not implemented
-//        try {
-//            int position = this.allGears.indexOf(updatedGearWithAllObjects);
-//            this.allGears.set(position, updatedGearWithAllObjects);
-//            this.recyclerView.getAdapter().notifyItemChanged(position);
-//            Utils.showToast(this, this.getResources().getString(R.string.gear_list_update_message), Toast.LENGTH_SHORT);
-//        }
-//        catch (NullPointerException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            int position = this.allGears.indexOf(updatedGearWithAllObjects);
+            this.allGears.set(position, updatedGearWithAllObjects);
+            this.recyclerView.getAdapter().notifyItemChanged(position);
+            Utils.showToast(this, this.getResources().getString(R.string.gear_list_update_message), Toast.LENGTH_SHORT);
+        }
+        catch (NullPointerException e) {
+            e.printStackTrace();
+        }
     }
 
     public void deleteItemGearList(GearWithAllObjects deletedGearWithAllObjects) {

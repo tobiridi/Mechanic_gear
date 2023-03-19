@@ -124,7 +124,7 @@ public class AddGearActivity extends AppCompatActivity {
                 //save representation
                 Representation newRep = new Representation(0, Utils.bitmapToByteArray(picture),0);
                 this.gearRepresentations.add(newRep);
-                this.refreshRepresentations();
+                this.refreshRepresentations(picture);
             }
             //get new signalType
             else if(data.hasExtra("signalTypeName") && data.hasExtra("signalTypePicture")) {
@@ -137,7 +137,7 @@ public class AddGearActivity extends AppCompatActivity {
                 //save signalType
                 SignalType newSignal = new SignalType(0, signalTypeName, Utils.bitmapToByteArray(signalTypePicture),0);
                 this.gearSignalTypes.add(newSignal);
-                this.refreshSignalTypes();
+                this.refreshSignalTypes(signalTypePicture);
             }
         }
     }
@@ -145,12 +145,10 @@ public class AddGearActivity extends AppCompatActivity {
     /**
      * Add the last representation picture into the linear layout
      */
-    private void refreshRepresentations() {
+    private void refreshRepresentations(Bitmap lastBitmap) {
         LinearLayout layout = findViewById(R.id.ll_gear_representations);
-        Representation lastRep = this.gearRepresentations.get(this.gearRepresentations.size() - 1);
-        Bitmap bitmap = Utils.byteArrayToBitmap(lastRep.getPicture());
         ImageView img = new ImageView(this);
-        img.setImageBitmap(bitmap);
+        img.setImageBitmap(lastBitmap);
         img.setPaddingRelative(10, 0, 0, 0);
         layout.addView(img);
     }
@@ -158,13 +156,11 @@ public class AddGearActivity extends AppCompatActivity {
     /**
      * Add the last signalType picture into the linear layout
      */
-    private void refreshSignalTypes() {
+    private void refreshSignalTypes(Bitmap lastBitmap) {
         LinearLayout layout = findViewById(R.id.ll_gear_signal_types);
         SignalType lastSignal = this.gearSignalTypes.get(this.gearSignalTypes.size() - 1);
         TextView textView = new TextView(this);
-
-        Bitmap bitmap = Utils.byteArrayToBitmap(lastSignal.getPicture());
-        Drawable bitmapDrawable = new BitmapDrawable(this.getResources(), bitmap);
+        Drawable bitmapDrawable = new BitmapDrawable(this.getResources(), lastBitmap);
 
         textView.setPaddingRelative(10,5,10,5);
         textView.setCompoundDrawablesWithIntrinsicBounds(null, bitmapDrawable,null,null);

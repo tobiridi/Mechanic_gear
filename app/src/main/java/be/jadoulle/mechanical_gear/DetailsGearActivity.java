@@ -1,17 +1,16 @@
 package be.jadoulle.mechanical_gear;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
@@ -19,11 +18,8 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.Arrays;
-
 import be.jadoulle.mechanical_gear.AsyncTask.GearAsyncTask;
 import be.jadoulle.mechanical_gear.Entities.DataClasses.GearWithAllObjects;
-import be.jadoulle.mechanical_gear.Entities.Gear;
 import be.jadoulle.mechanical_gear.Entities.Representation;
 import be.jadoulle.mechanical_gear.Entities.SignalType;
 import be.jadoulle.mechanical_gear.Utils.ActivityCode;
@@ -57,13 +53,37 @@ public class DetailsGearActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details_gear);
 
+        this.initViews();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (data != null && requestCode == ActivityCode.DETAILS_GEAR_ACTIVITY_CODE && resultCode == RESULT_OK) {
+            this.selectedGear = (GearWithAllObjects) data.getSerializableExtra("updatedGear");
+            setContentView(R.layout.activity_details_gear);
+            this.initViews();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent backIntent = new Intent();
+        backIntent.putExtra("updatedGear", this.selectedGear);
+        setResult(RESULT_OK, backIntent);
+        super.onBackPressed();
+    }
+
+    private void initViews() {
         this.tableLayout = findViewById(R.id.tl_details_gear);
 
         findViewById(R.id.btn_delete).setOnClickListener(delete_gear_listener);
         findViewById(R.id.btn_modify).setOnClickListener(modify_gear_listener);
 
-        //get selected gear from recycler view
-        this.selectedGear = (GearWithAllObjects) this.getIntent().getSerializableExtra("selectedGear");
+        if (this.selectedGear == null) {
+            //get selected gear from recycler view
+            this.selectedGear = (GearWithAllObjects) this.getIntent().getSerializableExtra("selectedGear");
+        }
 
         this.addDataInTableLayout();
     }

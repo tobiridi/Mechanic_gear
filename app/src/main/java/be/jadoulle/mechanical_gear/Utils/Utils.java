@@ -27,23 +27,33 @@ public final class Utils {
 
     /**
      * Transform via a {@link ByteArrayOutputStream}, a {@link Bitmap} to an array of {@link Byte},
-     * the quality is set to 80 and the format is PNG.
+     * the quality is set to 80 and the format is PNG.<br>
+     * If the parameter is null then the method returns null.
      * @param bitmap A picture
      * @return An array of {@link Byte}
      */
     public static byte[] bitmapToByteArray(Bitmap bitmap) {
+        if (bitmap == null)
+            return null;
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 80, stream);
         return stream.toByteArray();
     }
 
     /**
-     * Transform an array of {@link Byte} to a {@link Bitmap}.
+     * Transform an array of {@link Byte} to a {@link Bitmap}.<br>
+     * If the parameter is null then the method returns null.
      * @param array An array of byte
      * @return A representation in {@link Bitmap} from a byte array
      */
     public static Bitmap byteArrayToBitmap(byte[] array) {
+        if (array == null)
+            return null;
         return BitmapFactory.decodeByteArray(array, 0, array.length);
     }
 
+
+    /** ideas:
+     * method who displayed multiple or single error message in a Toast object.
+     */
 }
