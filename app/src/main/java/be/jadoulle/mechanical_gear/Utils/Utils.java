@@ -1,9 +1,13 @@
 package be.jadoulle.mechanical_gear.Utils;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.widget.Toast;
 import android.content.Context;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.ByteArrayOutputStream;
 
@@ -50,6 +54,40 @@ public final class Utils {
         if (array == null)
             return null;
         return BitmapFactory.decodeByteArray(array, 0, array.length);
+    }
+
+    /**
+     * Verify camera permission, ask if not already granted.
+     * Implement {@link AppCompatActivity#onRequestPermissionsResult(int, String[], int[])} in your activity to get the user response.
+     * @param activity {@link AppCompatActivity}
+     * @param activityCode code from {@link ActivityCode} class.
+     * @return true if the permission is granted otherwise false
+     */
+    public static boolean askCameraPermission(AppCompatActivity activity, int activityCode) {
+        /*
+         * step 1 : verify if already have permission, check every time
+         * step 2 : if needs, explain why to the user (UI)
+         * step 3 : ask permission
+         * step 4 : verify the user response
+         * step 5 : if the answer is true then use permission, otherwise remove functionality who need it
+         */
+
+        if(activity.checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+            //the permission already granted
+            return true;
+        }
+//        else if (activity.shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)) {
+//            //display explain
+//            System.out.println("explain why using camera");
+//            return true;
+//        }
+        else {
+            //ask permission
+            String[] permissions = {Manifest.permission.CAMERA};
+            activity.requestPermissions(permissions, activityCode);
+            return false;
+        }
+
     }
 
 

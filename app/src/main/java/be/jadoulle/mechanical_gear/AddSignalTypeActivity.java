@@ -1,9 +1,12 @@
 package be.jadoulle.mechanical_gear;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -12,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import be.jadoulle.mechanical_gear.Utils.ActivityCode;
+import be.jadoulle.mechanical_gear.Utils.Utils;
 
 public class AddSignalTypeActivity extends AppCompatActivity {
     private EditText etName;
@@ -20,9 +24,10 @@ public class AddSignalTypeActivity extends AppCompatActivity {
     private View.OnClickListener add_picture_listener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            //TODO : optimise with camera application
-            Intent intentCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            startActivityForResult(intentCamera, ActivityCode.ADD_SIGNAL_TYPE_ACTIVITY_CODE);
+            if (Utils.askCameraPermission(AddSignalTypeActivity.this, ActivityCode.ADD_SIGNAL_TYPE_ACTIVITY_CODE)) {
+                Intent intentCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intentCamera, ActivityCode.ADD_SIGNAL_TYPE_ACTIVITY_CODE);
+            }
         }
     };
 
@@ -69,6 +74,16 @@ public class AddSignalTypeActivity extends AppCompatActivity {
                 ImageView img = findViewById(R.id.iv_signal_type_picture);
                 img.setImageBitmap(picture);
                 this.currentBitmap = picture;
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        for (int i = 0; i < permissions.length; i++) {
+            if (permissions[i].equals(Manifest.permission.CAMERA) && grantResults[i] == PackageManager.PERMISSION_DENIED) {
+                findViewById(R.id.iv_signal_type_picture).setClickable(false);
             }
         }
     }

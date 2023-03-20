@@ -1,9 +1,12 @@
 package be.jadoulle.mechanical_gear;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -43,9 +46,10 @@ public class AddGearActivity extends AppCompatActivity {
     private View.OnClickListener add_representation_listener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            //TODO : optimise with camera application
-            Intent intentCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            startActivityForResult(intentCamera, ActivityCode.ADD_GEAR_ACTIVITY_CODE);
+            if (Utils.askCameraPermission(AddGearActivity.this, ActivityCode.MAIN_ACTIVITY_CODE)) {
+                Intent intentCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intentCamera, ActivityCode.ADD_GEAR_ACTIVITY_CODE);
+            }
         }
     };
 
@@ -138,6 +142,16 @@ public class AddGearActivity extends AppCompatActivity {
                 SignalType newSignal = new SignalType(0, signalTypeName, Utils.bitmapToByteArray(signalTypePicture),0);
                 this.gearSignalTypes.add(newSignal);
                 this.refreshSignalTypes(signalTypePicture);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        for (int i = 0; i < permissions.length; i++) {
+            if (permissions[i].equals(Manifest.permission.CAMERA) && grantResults[i] == PackageManager.PERMISSION_DENIED) {
+                findViewById(R.id.btn_add_representation).setClickable(false);
             }
         }
     }

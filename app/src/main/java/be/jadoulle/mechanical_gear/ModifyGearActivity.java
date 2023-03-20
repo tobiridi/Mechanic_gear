@@ -39,7 +39,6 @@ public class ModifyGearActivity extends AppCompatActivity {
     private View.OnClickListener add_representation_listener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            //TODO : optimise with camera application
             Intent intentCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             startActivityForResult(intentCamera, ActivityCode.MODIFY_GEAR_ACTIVITY_CODE);
         }
