@@ -3,7 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Tony/Documents/GitHub/Mechanic_gear/app/src/main/res/drawable/background_border.xml" value="0.2945" />
+        <entry key="..\:/Users/Tony/Documents/GitHub/Mechanic_gear/app/src/main/res/drawable/button_gradient_corner_background.xml" value="0.2945" />
+        <entry key="..\:/Users/Tony/Documents/GitHub/Mechanic_gear/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2945" />
+        <entry key="..\:/Users/Tony/Documents/GitHub/Mechanic_gear/app/src/main/res/drawable/imagebutton_add_new_gear_background.xml" value="0.2945" />
+        <entry key="..\:/Users/Tony/Documents/GitHub/Mechanic_gear/app/src/main/res/drawable/imagebutton_delete_gear_background.xml" value="0.2945" />
+        <entry key="..\:/Users/Tony/Documents/GitHub/Mechanic_gear/app/src/main/res/layout/activity_add_gear.xml" value="0.3392210144927536" />
         <entry key="..\:/Users/Tony/Documents/GitHub/Mechanic_gear/app/src/main/res/layout/activity_main.xml" value="0.3392210144927536" />
+        <entry key="..\:/Users/Tony/Documents/GitHub/Mechanic_gear/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2945" />
       </map>
     </option>
   </component>
