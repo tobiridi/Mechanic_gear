@@ -1,7 +1,8 @@
 package be.jadoulle.mechanical_gear;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
@@ -9,7 +10,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -21,17 +21,26 @@ public class AddSignalTypeActivity extends AppCompatActivity {
     private EditText etName;
     private Bitmap currentBitmap;
 
-    private View.OnClickListener add_picture_listener = new View.OnClickListener() {
+    private ActivityResultLauncher<Void> pictureLauncher = registerForActivityResult(
+            new ActivityResultContracts.TakePicturePreview(),
+            (Bitmap result) -> {
+                if(result != null) {
+                    ImageView img = findViewById(R.id.iv_signal_type_picture);
+                    img.setImageBitmap(result);
+                    this.currentBitmap = result;
+                }
+            });
+
+    private View.OnClickListener addPictureListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             if (Utils.askCameraPermission(AddSignalTypeActivity.this, ActivityCode.ADD_SIGNAL_TYPE_ACTIVITY_CODE)) {
-                Intent intentCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intentCamera, ActivityCode.ADD_SIGNAL_TYPE_ACTIVITY_CODE);
+                pictureLauncher.launch(null);
             }
         }
     };
 
-    private View.OnClickListener cancel_listener = new View.OnClickListener() {
+    private View.OnClickListener cancelListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             setResult(RESULT_CANCELED);
@@ -39,7 +48,7 @@ public class AddSignalTypeActivity extends AppCompatActivity {
         }
     };
 
-    private View.OnClickListener validate_listener = new View.OnClickListener() {
+    private View.OnClickListener validateListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             Intent signalTypeIntent = new Intent();
@@ -57,25 +66,9 @@ public class AddSignalTypeActivity extends AppCompatActivity {
 
         this.etName = findViewById(R.id.et_signal_type_name);
 
-        findViewById(R.id.iv_signal_type_picture).setOnClickListener(add_picture_listener);
-        findViewById(R.id.btn_cancel).setOnClickListener(cancel_listener);
-        findViewById(R.id.btn_validate).setOnClickListener(validate_listener);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(data != null && requestCode == ActivityCode.ADD_SIGNAL_TYPE_ACTIVITY_CODE && resultCode == RESULT_OK) {
-            //get picture
-            Bundle bundle = data.getExtras();
-            Bitmap picture = (Bitmap) bundle.get("data");
-
-            if(picture != null) {
-                ImageView img = findViewById(R.id.iv_signal_type_picture);
-                img.setImageBitmap(picture);
-                this.currentBitmap = picture;
-            }
-        }
+        findViewById(R.id.iv_signal_type_picture).setOnClickListener(addPictureListener);
+        findViewById(R.id.btn_cancel).setOnClickListener(cancelListener);
+        findViewById(R.id.btn_validate).setOnClickListener(validateListener);
     }
 
     @Override

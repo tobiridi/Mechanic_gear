@@ -1,17 +1,19 @@
 package be.jadoulle.mechanical_gear;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -43,26 +45,67 @@ public class AddGearActivity extends AppCompatActivity {
     private ArrayList<Representation> gearRepresentations = new ArrayList<>();
     private ArrayList<SignalType> gearSignalTypes = new ArrayList<>();
 
-    private View.OnClickListener add_representation_listener = new View.OnClickListener() {
+    private ActivityResultLauncher<Void> representationLauncher = registerForActivityResult(
+            new ActivityResultContracts.TakePicturePreview(),
+            (Bitmap result) -> {
+                //get new picture (gear representation)
+                if(result != null) {
+                    //save representation
+                    Representation newRep = new Representation(0, Utils.bitmapToByteArray(result),0);
+                    this.gearRepresentations.add(newRep);
+                    this.refreshRepresentations(result);
+                }
+            });
+
+    private ActivityResultLauncher<Intent> signalTypeLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            (ActivityResult result) -> {
+                Intent data = result.getData();
+                if (data != null && result.getResultCode() == RESULT_OK) {
+                    //get new signalType
+                    if(data.hasExtra("signalTypeName")) {
+                        String signalTypeName = data.getStringExtra("signalTypeName");
+                        Bitmap signalTypePicture = data.getParcelableExtra("signalTypePicture");
+
+                        if (signalTypeName.isEmpty())
+                            signalTypeName = null;
+
+                        //save signalType
+                        SignalType newSignal = new SignalType(0, signalTypeName, Utils.bitmapToByteArray(signalTypePicture),0);
+                        this.gearSignalTypes.add(newSignal);
+                        this.refreshSignalTypes(signalTypePicture);
+                    }
+                }
+            });
+
+    private View.OnClickListener addRepresentationListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             if (Utils.askCameraPermission(AddGearActivity.this, ActivityCode.MAIN_ACTIVITY_CODE)) {
-                Intent intentCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intentCamera, ActivityCode.ADD_GEAR_ACTIVITY_CODE);
+                try {
+                    representationLauncher.launch(null);
+                }
+                catch (ActivityNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
         }
     };
 
-    private View.OnClickListener add_signal_type_listener = new View.OnClickListener() {
+    private View.OnClickListener addSignalTypeListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            //TODO : optimise
-            Intent intent = new Intent(AddGearActivity.this, AddSignalTypeActivity.class);
-            startActivityForResult(intent, ActivityCode.ADD_GEAR_ACTIVITY_CODE);
+            try {
+                Intent intent = new Intent(AddGearActivity.this, AddSignalTypeActivity.class);
+                signalTypeLauncher.launch(intent);
+            }
+            catch (ActivityNotFoundException e) {
+                e.printStackTrace();
+            }
         }
     };
 
-    private View.OnClickListener cancel_listener = new View.OnClickListener() {
+    private View.OnClickListener cancelListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             setResult(RESULT_CANCELED);
@@ -70,7 +113,7 @@ public class AddGearActivity extends AppCompatActivity {
         }
     };
 
-    private View.OnClickListener validate_listener = new View.OnClickListener() {
+    private View.OnClickListener validateListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             if (isValidForm()) {
@@ -110,40 +153,10 @@ public class AddGearActivity extends AppCompatActivity {
         this.et_note = findViewById(R.id.et_gear_note);
 
         //set listeners
-        findViewById(R.id.btn_cancel).setOnClickListener(cancel_listener);
-        findViewById(R.id.btn_validate).setOnClickListener(validate_listener);
-        findViewById(R.id.btn_add_representation).setOnClickListener(add_representation_listener);
-        findViewById(R.id.btn_add_signalType).setOnClickListener(add_signal_type_listener);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (data != null && requestCode == ActivityCode.ADD_GEAR_ACTIVITY_CODE && resultCode == RESULT_OK) {
-            Bundle bundle = data.getExtras();
-            Bitmap picture = (Bitmap) bundle.get("data");
-
-            //get new picture (gear representation)
-            if(picture != null) {
-                //save representation
-                Representation newRep = new Representation(0, Utils.bitmapToByteArray(picture),0);
-                this.gearRepresentations.add(newRep);
-                this.refreshRepresentations(picture);
-            }
-            //get new signalType
-            else if(data.hasExtra("signalTypeName") && data.hasExtra("signalTypePicture")) {
-                String signalTypeName = data.getStringExtra("signalTypeName");
-                Bitmap signalTypePicture = data.getParcelableExtra("signalTypePicture");
-
-                if (signalTypeName.isEmpty())
-                    signalTypeName = null;
-
-                //save signalType
-                SignalType newSignal = new SignalType(0, signalTypeName, Utils.bitmapToByteArray(signalTypePicture),0);
-                this.gearSignalTypes.add(newSignal);
-                this.refreshSignalTypes(signalTypePicture);
-            }
-        }
+        findViewById(R.id.btn_cancel).setOnClickListener(cancelListener);
+        findViewById(R.id.btn_validate).setOnClickListener(validateListener);
+        findViewById(R.id.btn_add_representation).setOnClickListener(addRepresentationListener);
+        findViewById(R.id.btn_add_signalType).setOnClickListener(addSignalTypeListener);
     }
 
     @Override

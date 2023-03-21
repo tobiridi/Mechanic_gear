@@ -1,10 +1,14 @@
 package be.jadoulle.mechanical_gear;
 
-import androidx.annotation.Nullable;
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -17,7 +21,6 @@ import be.jadoulle.mechanical_gear.AsyncTask.GearAsyncTask;
 import be.jadoulle.mechanical_gear.AsyncTask.RepresentationAsyncTask;
 import be.jadoulle.mechanical_gear.AsyncTask.SignalTypeAsyncTask;
 import be.jadoulle.mechanical_gear.Entities.DataClasses.GearWithAllObjects;
-import be.jadoulle.mechanical_gear.Utils.ActivityCode;
 import be.jadoulle.mechanical_gear.Utils.Utils;
 import be.jadoulle.mechanical_gear.Views.GearAdapter;
 import be.jadoulle.mechanical_gear.Views.GearViewHolder;
@@ -27,21 +30,68 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private Thread progressBarThread;
 
-    private View.OnClickListener add_gear_listener = new View.OnClickListener() {
+    /*
+        "ActivityResultLauncher", used for launch an other activity, specify an input type
+        "registerForActivityResult", used for register the data receive from an other activity
+        "ActivityResultContract", define needed input type to produce an output type
+        "ActivityResultCallback", implement activityResult() method, used to get the output type needed for the "ActivityResultContract"
+    */
+    private ActivityResultLauncher<Intent> recyclerViewNewGearLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    Intent data = result.getData();
+                    if (data != null && result.getResultCode() == RESULT_OK) {
+                        GearWithAllObjects newGear = (GearWithAllObjects) data.getSerializableExtra("newGear");
+                        if (newGear != null) {
+                            //refresh Recycler View
+                            addItemGearList(newGear);
+                        }
+                    }
+                }
+            });
+
+    private ActivityResultLauncher<Intent> recyclerViewLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            (ActivityResult result) -> {
+                Intent data = result.getData();
+                if (data != null && result.getResultCode() == RESULT_OK) {
+                    GearWithAllObjects deletedGear = (GearWithAllObjects) data.getSerializableExtra("deletedGear");
+                    GearWithAllObjects updatedGear = (GearWithAllObjects) data.getSerializableExtra("updatedGear");
+                    //refresh Recycler View
+                    if (deletedGear != null) {
+                        deleteItemGearList(deletedGear);
+                    } else if(updatedGear != null) {
+                        updateItemGearList(updatedGear);
+                    }
+                }
+            });
+
+    private View.OnClickListener addGearListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            //TODO : optimise
-            Intent intent = new Intent(MainActivity.this, AddGearActivity.class);
-            startActivityForResult(intent, ActivityCode.MAIN_ACTIVITY_CODE);
+            try {
+                Intent intent = new Intent(MainActivity.this, AddGearActivity.class);
+                recyclerViewNewGearLauncher.launch(intent);
+            }
+            catch (ActivityNotFoundException e) {
+                e.printStackTrace();
+            }
         }
     };
+
+    //ACCESSOR
+    public ActivityResultLauncher<Intent> getRecyclerViewLauncher() {
+        return recyclerViewLauncher;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        findViewById(R.id.ibtn_add_new_item).setOnClickListener(add_gear_listener);
+        findViewById(R.id.ibtn_add_new_item).setOnClickListener(addGearListener);
 
         //configure recyclerView
         this.allGears = new ArrayList<>();
@@ -51,27 +101,6 @@ public class MainActivity extends AppCompatActivity {
 
         //call async task, retrieve all gears
         new GearAsyncTask(this).getAllGears();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (data != null && requestCode == ActivityCode.MAIN_ACTIVITY_CODE && resultCode == RESULT_OK) {
-            GearWithAllObjects newGear = (GearWithAllObjects) data.getSerializableExtra("newGear");
-            GearWithAllObjects deletedGear = (GearWithAllObjects) data.getSerializableExtra("deletedGear");
-            GearWithAllObjects updatedGear = (GearWithAllObjects) data.getSerializableExtra("updatedGear");
-
-            if (newGear != null) {
-                //refresh Recycler View
-                this.addItemGearList(newGear);
-            } else if (deletedGear != null) {
-                //refresh Recycler View
-                this.deleteItemGearList(deletedGear);
-            } else if(updatedGear != null) {
-                //refresh Recycler View
-                this.updateItemGearList(updatedGear);
-            }
-        }
     }
 
     /**
@@ -150,7 +179,8 @@ public class MainActivity extends AppCompatActivity {
             new SignalTypeAsyncTask(this, newGearWithAllObjects.getSignalTypes())
                     .createSignalTypes(newGearWithAllObjects.getGear());
 
-        } catch (InterruptedException e) {
+        }
+        catch (InterruptedException e) {
             e.printStackTrace();
         }
     }

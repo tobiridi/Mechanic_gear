@@ -1,5 +1,6 @@
 package be.jadoulle.mechanical_gear.Views;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -17,7 +18,6 @@ import be.jadoulle.mechanical_gear.DetailsGearActivity;
 import be.jadoulle.mechanical_gear.Entities.DataClasses.GearWithAllObjects;
 import be.jadoulle.mechanical_gear.MainActivity;
 import be.jadoulle.mechanical_gear.R;
-import be.jadoulle.mechanical_gear.Utils.ActivityCode;
 import be.jadoulle.mechanical_gear.Utils.Utils;
 
 public class GearViewHolder extends RecyclerView.ViewHolder {
@@ -36,10 +36,14 @@ public class GearViewHolder extends RecyclerView.ViewHolder {
         this.itemView.setOnClickListener((View v) -> {
             Context context = v.getContext();
             if (context instanceof MainActivity) {
-                Intent intent = new Intent(context, DetailsGearActivity.class);
-                intent.putExtra("selectedGear", this.selectedGear);
-                //TODO : optimise
-                ((MainActivity) context).startActivityForResult(intent, ActivityCode.MAIN_ACTIVITY_CODE);
+                try {
+                    Intent intent = new Intent(context, DetailsGearActivity.class);
+                    intent.putExtra("selectedGear", this.selectedGear);
+                    ((MainActivity) context).getRecyclerViewLauncher().launch(intent);
+                }
+                catch (ActivityNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
